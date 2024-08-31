@@ -15,4 +15,5 @@ export const setUpdateSettings =  function(next) {
         runValidators: true
     });
     next();
+    
 };
