@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import { deleteWaterInfo, getWaterPerDay, patchWaterInfo, postWaterInfo } from "../servises/water.js";
+import { deleteWaterInfo, getWaterPerDay, getWaterPerMonth, patchWaterInfo, postWaterInfo } from "../servises/water.js";
 import { drinkWaterProcent } from "../utils/drinkWaterProcent.js";
 
 export const postWater = async (req, res) => {
@@ -42,7 +42,7 @@ export const deleteWater = async (req, res) => {
     });
 }
 export const getWaterPerDayInfo = async (req, res) => {
-    const { date } = req.params
+    const { date } = req.body
     const parsedDate = new Date(date);
     const results = await getWaterPerDay( parsedDate )
      if (results.length === 0) {
@@ -60,4 +60,19 @@ export const getWaterPerDayInfo = async (req, res) => {
             
     )
 
+}
+export const getWaterPerMonthInfo = async (req, res) => {
+     const { firstDate, lastDate } = req.body;
+   const date1 = new Date(firstDate)
+    const date2 = new Date(lastDate)
+   
+    if (isNaN(date1) || isNaN(date2)) {
+        throw createHttpError(400, "Invalid date format");
+    }
+    const results = await getWaterPerMonth(date1, date2)
+    res.status(200).json({
+            status: 200,
+            message: "Water data retrieved successfully",
+            data: results,
+        });
 }
