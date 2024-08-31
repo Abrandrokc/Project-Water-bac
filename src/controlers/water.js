@@ -1,5 +1,6 @@
 import createHttpError from "http-errors";
-import { deleteWaterInfo, patchWaterInfo, postWaterInfo } from "../servises/water.js";
+import { deleteWaterInfo, getWaterPerDay, patchWaterInfo, postWaterInfo } from "../servises/water.js";
+import { drinkWaterProcent } from "../utils/drinkWaterProcent.js";
 
 export const postWater = async (req, res) => {
    
@@ -39,4 +40,24 @@ export const deleteWater = async (req, res) => {
         status: 204,
         message: "Successfully deleted a water!"
     });
+}
+export const getWaterPerDayInfo = async (req, res) => {
+    const { date } = req.params
+    const parsedDate = new Date(date);
+    const results = await getWaterPerDay( parsedDate )
+     if (results.length === 0) {
+    throw createHttpError(404, "Water info not found");
+    }
+   let Procent = drinkWaterProcent(results)
+    console.log(results)
+    
+    res.status(200).json(
+        {
+            status: 200,
+            WaterProcent: Procent,
+         data: results,
+        }
+            
+    )
+
 }
