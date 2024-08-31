@@ -22,14 +22,43 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
         const endDate = new Date(secondDate);
         const results = await Water.find({
             date: {
-                $gte: startDate, 
-                $lte: endDate   
+                $gte: startDate.toISOString(), 
+                $lte: endDate.toISOString()   
             }
         });
 
-        return results;
-  
+          const daysMap = {};
+
+    results.forEach(entry => {
+         const dateObject = new Date(entry.date);
+        const day = dateObject.getDate(); 
+        const month = dateObject.toLocaleString('default', { month: 'long' }); 
+        console.log(`Day: ${day}, Month: ${month}`);
+
+
+        if (!daysMap[day]) {
+            daysMap[day] = {
+                date: `${day}, ${month}`,
+                dailyTotal: 0,
+                consumptionCount: 0,
+                dailyNorm: 1.8,
+            };
+        }
+
+        daysMap[day].dailyTotal += entry.waterVolume;
+        daysMap[day].consumptionCount += 1;
+    });
+
+    
+    const dailyInfo = Object.values(daysMap).map(dayInfo => ({
+        ...dayInfo,
+        waterPercent: ((dayInfo.dailyTotal / (dayInfo.dailyNorm * 1000)) * 100).toFixed(2) + '%',
+    }));
+
+    return dailyInfo;
 };
+  
+
 export const deleteWaterInfo = date => Water.findOneAndDelete(date)
 export const postWaterInfo = data => Water.create(data)
 export const patchWaterInfo = async (filter, data, options = {}) => {
