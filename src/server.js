@@ -16,13 +16,13 @@ export default function setupServer() {
     const app = express()
     app.use(express.json())
      app.use(cors());
-    app.use(
+   app.use(
   pino({
     transport: {
       target: 'pino-pretty',
     },
-  }),
-    );
+  })
+);
 app.use("/water", waterRouters)
     app.use(notFoundHandler)
   app.use(errorHandler)
