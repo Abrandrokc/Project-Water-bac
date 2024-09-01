@@ -17,7 +17,6 @@ const usersSchema = new Schema(
     },
     waterAmount: {
       type: Number,
-
       default: 1.5,
     },
     weight: { type: Number, default: 0 },

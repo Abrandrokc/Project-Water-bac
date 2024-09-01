@@ -13,7 +13,7 @@ const jsonParser = express.json();
 router.post(
   "/register",
   jsonParser,
-  await validateBody(registerUserSchema),
+  validateBody(registerUserSchema),
   ctrlWrapper(registerUserController)
 );
 
