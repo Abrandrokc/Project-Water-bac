@@ -6,7 +6,7 @@ import env from "./utils/env.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 import errorHandler from "./middleware/errorHandler.js";
 import { swaggerDocs } from "./middleware/swaggerDocs.js";
-
+import swaggerUI from 'swagger-ui-express';
 
 export default function setupServer() {
   dotenv.config()
@@ -22,10 +22,8 @@ export default function setupServer() {
       },
     }),
   );
-
+  app.use('/api-docs', swaggerUI.serve, swaggerDocs());
   app.use(notFoundHandler)
   app.use(errorHandler)
-  app.use('/uploads', express.static(UPLOAD_DIR));
-  app.use('/api-docs', swaggerDocs());
   app.listen(port, () => console.log(`Server is running on port ${port} `))
 }

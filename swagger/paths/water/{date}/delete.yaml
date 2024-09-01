@@ -12,11 +12,11 @@ parameters:
     schema:
       type: string
       format: date
-      example: "2024-09-01"
-    description: "The date of the water record to delete"
+      example: "2024-09-01T14:00"
+    description: "The date of the water intake record to delete"
 responses:
   "200":
-    description: "Successfully deleted the water record"
+    description: "Successfully deleted the water intake record"
     content:
       application/json:
         schema:
@@ -27,7 +27,7 @@ responses:
               example: 200
             message:
               type: string
-              example: "Successfully deleted a water record!"
+              example: "Successfully deleted a water intake record!"
   "404":
     $ref: "../../../components/responses/404.yaml"
   "400":

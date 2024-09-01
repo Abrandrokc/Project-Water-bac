@@ -11,6 +11,7 @@ parameters:
     schema:
       type: string
       format: date
+      example: "2024-09-01T14:00"
     required: true
     description: "The date of the record to update"
 requestBody:
@@ -26,6 +27,7 @@ requestBody:
           date:
             type: string
             format: date
+            example: "2024-09-01T14:00"
             description: "The updated date of water consumption"
 responses:
   "200":

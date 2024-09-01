@@ -17,10 +17,12 @@ requestBody:
         properties:
           waterVolume:
             type: number
+            example: 250
             description: "The amount of water consumed in milliliters"
           date:
             type: string
             format: date
+            example: "2024-09-01T14:00"
             description: "The date of water consumption"
 responses:
   "201":
