@@ -3,8 +3,9 @@ import cors from "cors";
 import pino from "pino-http";
 import dotenv from "dotenv";
 import env from "./utils/env.js";
+import cookieParser from "cookie-parser";
 
-import  authRouter  from "./route/auth.js";
+import authRouter from "./route/auth.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 import errorHandler from "./middleware/errorHandler.js";
 
@@ -15,6 +16,7 @@ export default function setupServer() {
   const app = express();
   app.use(express.json());
   app.use(cors());
+  app.use(cookieParser());
   app.use(
     pino({
       transport: {

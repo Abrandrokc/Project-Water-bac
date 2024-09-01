@@ -40,3 +40,7 @@ export async function loginUser(payload) {
     ...newSession,
   });
 }
+
+export async function logoutUser({ sessionId, refreshToken }) {
+    await Session.deleteOne({ _id: sessionId, refreshToken });
+  }

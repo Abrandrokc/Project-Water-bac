@@ -8,7 +8,8 @@ import { registerUserSchema, loginUserSchema } from "../validation/auth.js";
 import {
   registerUserController,
   loginUserController,
-} from "../controlers/auth.js";
+  logoutUserController
+} from "../controllers/auth.js";
 
 const router = Router();
 const jsonParser = express.json();
@@ -26,5 +27,7 @@ router.post(
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController)
 );
+
+router.post('/logout', ctrlWrapper(logoutUserController));
 
 export default router;
