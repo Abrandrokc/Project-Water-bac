@@ -1,0 +1,487 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "WaterTracker app",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "This is a documentation of WaterTracker app"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://example.com/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Water",
+      "description": "Operations about water."
+    },
+    {
+      "name": "Auth",
+      "description": "Auth operations."
+    }
+  ],
+  "paths": {
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Add a new water intake record",
+        "operationId": "postWater",
+        "description": "Adds a new water intake record based on provided date",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "waterVolume",
+                  "date"
+                ],
+                "properties": {
+                  "waterVolume": {
+                    "type": "number",
+                    "description": "The amount of water consumed in milliliters"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The date of water consumption"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Adds a new water intake record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a water record!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/water/{date}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update a water intake record",
+        "operationId": "patchWater",
+        "description": "Update a water intake record by date",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "required": true,
+            "description": "The date of the record to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "waterVolume": {
+                    "type": "number",
+                    "description": "The updated amount of water consumed in milliliters"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The updated date of water consumption"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update a water intake record by date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated a water intake record!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete a water intake record",
+        "operationId": "deleteWater",
+        "description": "Delete a water intake record based on the provided date",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2024-09-01"
+            },
+            "description": "The date of the water record to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the water record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully deleted a water record!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/water/perDay": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get information on water intake for a day",
+        "operationId": "getWaterPerDayInfo",
+        "description": "Retrieves water intake records for a specific day",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-09-01",
+                    "description": "The date for which to retrieve water intake information"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved water intake information for the specified day",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "WaterProcent": {
+                      "type": "string",
+                      "example": "50%"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/water"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/water/perMonth": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water intake information for a specific month",
+        "operationId": "getWaterPerMonthInfo",
+        "description": "Retrieves water intake records for a specific month",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstDate": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-09-01",
+                    "description": "The starting date of the month for which to retrieve water intake information"
+                  },
+                  "lastDate": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-09-30",
+                    "description": "The ending date of the month for which to retrieve water intake information"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved water intake information for the specified month",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Water data retrieved successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "example": "1, September"
+                          },
+                          "dailyTotal": {
+                            "type": "number",
+                            "example": 1500
+                          },
+                          "consumptionCount": {
+                            "type": "integer",
+                            "example": 3
+                          },
+                          "dailyNorm": {
+                            "type": "number",
+                            "example": 1.8,
+                            "description": "Daily recommended water intake in liters"
+                          },
+                          "waterPercent": {
+                            "type": "string",
+                            "example": "83.33%"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "water": {
+        "type": "object",
+        "description": "Schema representing a water intake record",
+        "required": [
+          "waterVolume",
+          "date"
+        ],
+        "properties": {
+          "waterVolume": {
+            "type": "number",
+            "description": "The amount of water consumed in milliliters",
+            "example": 500
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of water consumption",
+            "example": "2024-09-01"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid request parameters"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "errors"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Resource not found"
+                },
+                "errors": {
+                  "type": "array",
+                  "example": []
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
