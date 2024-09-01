@@ -28,6 +28,7 @@
     "mongoose": "^8.6.0",
     "pino": "^9.3.2",
     "pino-http": "^10.2.0",
-    "pino-pretty": "^11.2.2"
+    "pino-pretty": "^11.2.2",
+    "randombytes": "^2.1.0"
   }
 }
