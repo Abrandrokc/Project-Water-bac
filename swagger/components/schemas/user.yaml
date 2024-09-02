@@ -1,0 +1,32 @@
+type: object
+description: Schema representing a user
+properties:
+  _id:
+    type: string
+    example: "64f4b7b8f5e1e5f5a4e8f7b8"
+  email:
+    type: string
+    format: email
+    example: "user@example.com"
+  name:
+    type: string
+    example: "John Doe"
+  photo:
+    type: string
+    format: uri
+    example: "https://example.com/photo.jpg"
+  gender:
+    type: string
+    enum:
+      - woman
+      - man
+    example: "woman"
+  waterAmount:
+    type: number
+    example: 1.5
+  weight:
+    type: number
+    example: 70
+  sportHours:
+    type: number
+    example: 2

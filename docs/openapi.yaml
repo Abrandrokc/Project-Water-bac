@@ -15,6 +15,15 @@ servers:
   - url: http://localhost:3000
   - url: https://example.com/api/v1
 paths:
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register/post.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login/post.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout/post.yaml
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
@@ -30,6 +39,16 @@ paths:
     get:
       $ref: ../swagger/paths/water/perMonth/get.yaml
 components:
+  schemas:
+    user:
+      $ref: ../swagger/components/schemas/user.yaml
+    water:
+      $ref: ../swagger/components/schemas/water.yaml
+  responses:
+    404:
+      $ref: ../swagger/components/responses/404.yaml
+    400:
+      $ref: ../swagger/components/responses/400.yaml
   securitySchemes:
     bearerAuth:
       type: http
