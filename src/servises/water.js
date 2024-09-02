@@ -17,9 +17,11 @@ export const getWaterPerDay = async (date) => {
     return results;
 };
 export const getWaterPerMonth = async (firstDate, secondDate) => {
-       
+   console.log(firstDate)
+    console.log(secondDate)
         const startDate = new Date(firstDate);
-        const endDate = new Date(secondDate);
+    const endDate = new Date(secondDate);
+     
         const results = await Water.find({
             createdAt: {
                 $gte: startDate.toISOString(), 
@@ -30,7 +32,7 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
           const daysMap = {};
 
     results.forEach(entry => {
-         const dateObject = new Date(entry.date);
+         const dateObject = new Date(entry.createdAt);
         const day = dateObject.getDate(); 
         const month = dateObject.toLocaleString('default', { month: 'long' }); 
         console.log(`Day: ${day}, Month: ${month}`);
@@ -44,16 +46,31 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
                 dailyNorm: 1.8,
             };
         }
+       
+    daysMap[day].dailyTotal += entry.waterVolume;
+    
+    
+    if (daysMap[day].dailyTotal > daysMap[day].dailyNorm * 1000) {
+        daysMap[day].dailyTotal = daysMap[day].dailyNorm * 1000;
+    }
 
-        daysMap[day].dailyTotal += entry.waterVolume;
-        daysMap[day].consumptionCount += 1;
-    });
+    daysMap[day].consumptionCount += 1;
+});
 
     
-    const dailyInfo = Object.values(daysMap).map(dayInfo => ({
+  const dailyInfo = Object.values(daysMap).map(dayInfo => {
+    let waterPercent = ((dayInfo.dailyTotal / (dayInfo.dailyNorm * 1000)) * 100);
+
+    if (waterPercent > 100) {
+        waterPercent = 100;
+    }
+
+    return {
         ...dayInfo,
-        waterPercent: ((dayInfo.dailyTotal / (dayInfo.dailyNorm * 1000)) * 100).toFixed(2) + '%',
-    }));
+        waterPercent: waterPercent.toFixed(2) + '%',
+    };
+});
+
 
     return dailyInfo;
 };
