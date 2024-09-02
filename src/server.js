@@ -5,9 +5,11 @@ import dotenv from "dotenv";
 import env from "./utils/env.js";
 import cookieParser from "cookie-parser";
 
-import authRouter from "./route/auth.js";
+import authRouter from "./route/authRouter.js";
+import userRouter from "./route/userRouter.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 import errorHandler from "./middleware/errorHandler.js";
+import { UPLOAD_DIR } from "./constants/index.js";
 
 export default function setupServer() {
   dotenv.config();
@@ -24,7 +26,9 @@ export default function setupServer() {
       },
     })
   );
+  app.use("/uploads", express.static(UPLOAD_DIR));
   app.use(authRouter);
+  app.use(userRouter);
   app.use(notFoundHandler);
   app.use(errorHandler);
   app.listen(port, () => console.log(`Server is running on port ${port} `));
