@@ -19,6 +19,8 @@ const jsonParser = express.json();
 
 router.use(authenticate);
 
+router.get("/:userIdParam", isValidId, ctrlWrapper(getUserByIdController));
+
 router.patch(
   "/updateUser",
   jsonParser,
@@ -26,7 +28,5 @@ router.patch(
   upload.single("photo"),
   ctrlWrapper(patchUserController)
 );
-
-router.get("/:userIdParam", isValidId, ctrlWrapper(getUserByIdController));
 
 export default router;
