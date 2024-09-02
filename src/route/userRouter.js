@@ -19,13 +19,14 @@ const jsonParser = express.json();
 
 router.use(authenticate);
 
+
+
 router.get("/:userIdParam", isValidId, ctrlWrapper(getUserByIdController));
 
 router.patch(
-  "/updateUser",
+  "/updateUser/:userIdParam",
   jsonParser,
   validateBody(userSchema),
-  upload.single("photo"),
   ctrlWrapper(patchUserController)
 );
 
