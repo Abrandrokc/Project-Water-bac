@@ -24,6 +24,15 @@ paths:
   /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout/post.yaml
+  /user/avatar:
+    put:
+      $ref: ../swagger/paths/user/avatar/put.yaml
+  /user/{userIdParam}:
+    get:
+      $ref: ../swagger/paths/user/{userIdParam}/get.yaml
+  /user/updateUser/{userIdParam}:
+    patch:
+      $ref: ../swagger/paths/user/updateUser/{userIdParam}/patch.yaml
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml

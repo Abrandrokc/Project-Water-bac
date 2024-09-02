@@ -320,6 +320,253 @@
         }
       }
     },
+    "/user/avatar": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user's avatar",
+        "operationId": "setAvatar",
+        "description": "Uploads and updates the user's avatar.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The avatar image file to upload."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated user avatar.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated user!"
+                    },
+                    "data": {
+                      "type": "string",
+                      "format": "uri",
+                      "example": "https://example.com/photo.jpg",
+                      "description": "URL of the updated user avatar."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/user/{userIdParam}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user by ID",
+        "operationId": "getUserById",
+        "description": "Retrieves user information based on user ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userIdParam",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "64f4b7b8f5e1e5f5a4e8f7b8"
+            },
+            "description": "The ID of the user to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found User!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found User!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/user/updateUser/{userIdParam}": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user details",
+        "operationId": "updateUser",
+        "description": "Updates the user's details such as email, password, name, and gender.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userIdParam",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "64f4b7b8f5e1e5f5a4e8f7b8"
+            },
+            "description": "The ID of the user to update."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com",
+                    "description": "The new email of the user."
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 8,
+                    "maxLength": 64,
+                    "example": "newpassword123",
+                    "description": "The new password of the user."
+                  },
+                  "oldPassword": {
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 8,
+                    "maxLength": 64,
+                    "example": "oldpassword123",
+                    "description": "The user's old password, required to change the password."
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe",
+                    "description": "The new name of the user."
+                  },
+                  "gender": {
+                    "type": "string",
+                    "enum": [
+                      "woman",
+                      "man"
+                    ],
+                    "example": "man",
+                    "description": "The new gender of the user."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
     "/water": {
       "post": {
         "tags": [
