@@ -18,3 +18,8 @@ export const setAvatar = async (uploadPhoto) => {
     isNew: Boolean(updateUser?.lastErrorObject?.upserted),
   };
 };
+
+export async function getUserById(userIdParam) {
+  const userById = await UsersCollection.findOne({ _id: userIdParam});
+  return userById;
+}
