@@ -48,12 +48,6 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
         }
        
     daysMap[day].dailyTotal += entry.waterVolume;
-    
-    
-    if (daysMap[day].dailyTotal > daysMap[day].dailyNorm * 1000) {
-        daysMap[day].dailyTotal = daysMap[day].dailyNorm * 1000;
-    }
-
     daysMap[day].consumptionCount += 1;
 });
 
@@ -61,10 +55,7 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
   const dailyInfo = Object.values(daysMap).map(dayInfo => {
     let waterPercent = ((dayInfo.dailyTotal / (dayInfo.dailyNorm * 1000)) * 100);
 
-    if (waterPercent > 100) {
-        waterPercent = 100;
-    }
-
+    
     return {
         ...dayInfo,
         waterPercent: waterPercent.toFixed(2) + '%',
