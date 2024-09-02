@@ -7,6 +7,8 @@ import env from "../utils/env.js";
 import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
 import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
 
+
+
 export const patchUserController = async (req, res, next) => {
   const userId = req.user._id;
   const photo = req.file;
@@ -40,7 +42,6 @@ export const patchUserController = async (req, res, next) => {
 };
 
 export async function getUserByIdController(req, res, next) {
-  console.log(req.user);
   const { userIdParam } = req.params;
   const userId = req.user._id;
   const userById = await getUserById(userIdParam, userId);
