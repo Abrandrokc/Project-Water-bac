@@ -1,0 +1,15 @@
+type: object
+description: Schema representing a water intake record
+required:
+  - waterVolume
+  - date
+properties:
+  waterVolume:
+    type: number
+    description: "The amount of water consumed in milliliters"
+    example: 500
+  date:
+    type: string
+    format: date
+    description: "The date of water consumption"
+    example: "2024-09-01T14:00"
