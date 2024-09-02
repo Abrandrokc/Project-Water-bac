@@ -8,7 +8,7 @@ export const getWaterPerDay = async (date) => {
     console.log(startDate)
      console.log(endDate)
     const results = await Water.find({
-        date: {
+        createdAt: {
             $gte: startDate.toISOString(), 
             $lt: endDate.toISOString()
         }
@@ -21,7 +21,7 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
         const startDate = new Date(firstDate);
         const endDate = new Date(secondDate);
         const results = await Water.find({
-            date: {
+            createdAt: {
                 $gte: startDate.toISOString(), 
                 $lte: endDate.toISOString()   
             }
