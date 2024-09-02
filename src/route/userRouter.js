@@ -10,6 +10,7 @@ import { isValidId } from "../middleware/isValidId.js";
 
 import { userSchema } from "../validation/user.js";
 import {
+  putUserController,
   patchUserController,
   getUserByIdController,
 } from "../controllers/users.js";
@@ -19,7 +20,12 @@ const jsonParser = express.json();
 
 router.use(authenticate);
 
-
+router.put(
+  "/avatar",
+  jsonParser,
+  upload.single("photo"),
+  ctrlWrapper(putUserController)
+);
 
 router.get("/:userIdParam", isValidId, ctrlWrapper(getUserByIdController));
 
