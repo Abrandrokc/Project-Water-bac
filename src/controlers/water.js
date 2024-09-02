@@ -13,7 +13,7 @@ export const postWater = async (req, res) => {
    
 }
 export const patchWater = async (req, res) => {
-    const { date } = req.body
+    const { date } = req.params
    
     const result = await patchWaterInfo({ date: date }, req.body)
     if (!result) {
