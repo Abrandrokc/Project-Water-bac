@@ -76,10 +76,10 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
 };
   
 
-export const deleteWaterInfo = date => Water.findOneAndDelete(date)
+export const deleteWaterInfo = id => Water.findOneAndDelete(id)
 export const postWaterInfo = data => Water.create(data)
-export const patchWaterInfo = async (filter, data, options = {}) => {
-    const result = await Water.findOneAndUpdate(filter, data, {
+export const patchWaterInfo = async (filter, id, options = {}) => {
+    const result = await Water.findOneAndUpdate(filter, id, {
         new: true,
         includeResultMetadata: true,
         ...options

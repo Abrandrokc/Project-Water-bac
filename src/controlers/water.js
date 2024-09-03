@@ -13,9 +13,9 @@ export const postWater = async (req, res) => {
    
 }
 export const patchWater = async (req, res) => {
-    const { date } = req.params
+    const { id } = req.params
    
-    const result = await patchWaterInfo({ date: date }, req.body)
+    const result = await patchWaterInfo({ id: id }, req.body)
     if (!result) {
         throw createHttpError(404, "Water info not found")
 
@@ -28,8 +28,8 @@ export const patchWater = async (req, res) => {
     )
 }
 export const deleteWater = async (req, res) => {
-    const { date } = req.body
-    const result = await deleteWaterInfo({ date: date })
+    const { id } = req.body
+    const result = await deleteWaterInfo({ id: id })
     if (!result) {
 
         throw createHttpError(404, "Contact not found");
