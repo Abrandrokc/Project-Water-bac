@@ -8,7 +8,7 @@ const waterRouters = Router();
 
 waterRouters.post("/",validateBody(WaterNotes) , ctrlWrapper(postWater) );
 waterRouters.patch("/:date", validateBody(WaterPatchNotes), ctrlWrapper(patchWater));
-waterRouters.delete("/", ctrlWrapper(deleteWater));
+waterRouters.delete("/:date", ctrlWrapper(deleteWater));
 waterRouters.get("/perDay", ctrlWrapper(getWaterPerDayInfo));
 waterRouters.get("/perMonth", ctrlWrapper(getWaterPerMonthInfo));
 

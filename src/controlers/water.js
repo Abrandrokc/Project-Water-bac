@@ -62,7 +62,8 @@ export const getWaterPerDayInfo = async (req, res) => {
 
 }
 export const getWaterPerMonthInfo = async (req, res) => {
-     const { firstDate, lastDate } = req.body;
+    const { firstDate, lastDate } = req.body;
+   
    const date1 = new Date(firstDate)
     const date2 = new Date(lastDate)
    
