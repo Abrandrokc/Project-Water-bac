@@ -2,10 +2,12 @@ import { UsersCollection } from "../db/models/users.js";
 import bcrypt from "bcrypt";
 
 export const setAvatar = async (uploadPhoto) => {
-  const updateData = { ...uploadPhoto.photo };
-  if (uploadPhoto.photo) {
-    updateData.photo = uploadPhoto.photo;
-  }
+  console.log(uploadPhoto)
+  const updateData = {};
+    
+    if (uploadPhoto.photo) {
+      updateData.photo = uploadPhoto.photo;
+    }
 
   const updateUser = await UsersCollection.findOneAndUpdate(
     { _id: uploadPhoto.userId },

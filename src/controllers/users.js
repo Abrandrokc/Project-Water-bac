@@ -7,7 +7,7 @@ import env from "../utils/env.js";
 import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
 import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
 
-export const putUserController = async (req, res, next) => {
+export const patchUserAvatarController = async (req, res, next) => {
   const userId = req.user._id;
   const photo = req.file;
   const user = req.body;
@@ -21,12 +21,8 @@ export const putUserController = async (req, res, next) => {
     }
   }
 
-  const result = await setAvatar({
-    userId,
-    user,
-    photo: photoUrl,
-  });
-
+  const result = await setAvatar({ userId, photo: photoUrl });
+  console.log(result);
   if (!result) {
     next(createHttpError(404, "User not found"));
     return;
@@ -35,7 +31,7 @@ export const putUserController = async (req, res, next) => {
   res.json({
     status: 200,
     message: `Successfully updated user!`,
-    data: result.user.photo,
+    data: result.user,
   });
 };
 

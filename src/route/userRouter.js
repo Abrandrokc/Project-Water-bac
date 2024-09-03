@@ -9,7 +9,7 @@ import { upload } from "../middleware/multer.js";
 
 import { userSchema } from "../validation/user.js";
 import {
-  putUserController,
+  patchUserAvatarController,
   patchUserController,
   getValidUser,
 } from "../controllers/users.js";
@@ -19,11 +19,11 @@ const jsonParser = express.json();
 
 router.use(authenticate);
 
-router.put(
+router.patch(
   "/avatar",
   jsonParser,
   upload.single("photo"),
-  ctrlWrapper(putUserController)
+  ctrlWrapper(patchUserAvatarController)
 );
 
 router.get("/validUser", ctrlWrapper(getValidUser));
