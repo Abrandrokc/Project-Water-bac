@@ -1,0 +1,94 @@
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+description: "Registers a new user in the system"
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            type: string
+            format: email
+            example: "user@example.com"
+            description: "The user's email address"
+          password:
+            type: string
+            format: password
+            example: "password123"
+            description: "The user's password"
+          name:
+            type: string
+            example: "John Doe"
+            description: "The user's name"
+          photo:
+            type: string
+            format: uri
+            example: "https://example.com/photo.jpg"
+            description: "URL of the user's profile picture"
+          gender:
+            type: string
+            enum:
+              - woman
+              - man
+            example: "woman"
+            description: "The user's gender"
+          waterAmount:
+            type: number
+            example: 1.5
+            description: "The user's daily water intake goal in liters"
+          weight:
+            type: number
+            example: 70
+            description: "The user's weight in kilograms"
+          sportHours:
+            type: number
+            example: 2
+            description: "The user's weekly sport activity in hours"
+responses:
+  "201":
+    description: "Successfully registered a user"
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: "Successfully registered a user!"
+            data:
+              type: object
+              $ref: "../../../components/schemas/user.yaml"
+  "400":
+    $ref: "../../../components/responses/400.yaml"
+  "409":
+    description: "Conflict, email already in use"
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: "Email in use"
