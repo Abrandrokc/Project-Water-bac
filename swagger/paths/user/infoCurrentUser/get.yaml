@@ -1,21 +1,13 @@
 tags:
   - User
-summary: Get user by ID
-operationId: getUserById
-description: "Retrieves user information based on user ID."
+summary: Get current user's information
+operationId: CurrentUserInfo
+description: "Retrieves the authenticated user's information."
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: userIdParam
-    required: true
-    schema:
-      type: string
-      example: "64f4b7b8f5e1e5f5a4e8f7b8"
-    description: "The ID of the user to retrieve."
 responses:
   "200":
-    description: "Successfully found User!"
+    description: "Successfully retrieved the current user's information."
     content:
       application/json:
         schema:
@@ -34,7 +26,9 @@ responses:
             data:
               type: object
               $ref: "../../../components/schemas/user.yaml"
-  "400":
-    $ref: "../../../components/responses/400.yaml"
   "404":
     $ref: "../../../components/responses/404.yaml"
+  "401":
+    $ref: "../../../components/responses/401.yaml"
+  "400":
+    $ref: "../../../components/responses/400.yaml"

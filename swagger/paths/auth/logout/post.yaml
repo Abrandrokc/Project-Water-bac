@@ -11,18 +11,4 @@ responses:
   "400":
     $ref: "../../../components/responses/400.yaml"
   "401":
-    description: "Unauthorized, session not found or invalid"
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - status
-            - message
-          properties:
-            status:
-              type: integer
-              example: 401
-            message:
-              type: string
-              example: "Unauthorized"
+    $ref: "../../../components/responses/401.yaml"

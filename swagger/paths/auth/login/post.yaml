@@ -50,22 +50,8 @@ responses:
                   type: string
                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
   "400":
-    $ref: ../../../components/responses/400.yaml
+    $ref: "../../../components/responses/400.yaml"
   "401":
-    description: "Unauthorized, invalid credentials"
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - status
-            - message
-          properties:
-            status:
-              type: integer
-              example: 401
-            message:
-              type: string
-              example: "Unauthorized"
+    $ref: "../../../components/responses/401.yaml"
   "404":
     $ref: "../../../components/responses/404.yaml"

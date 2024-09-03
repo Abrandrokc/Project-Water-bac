@@ -1,0 +1,15 @@
+description: Unauthorized request due to invalid or expired token
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: "Unauthorized: Access token is missing, invalid, or expired"
