@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import router from "./routes/index.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 import errorHandler from "./middleware/errorHandler.js";
+import waterRouters from "./routes/waterRoute.js";
 
 import { UPLOAD_DIR } from "./constants/index.js";
 
@@ -31,6 +32,7 @@ export default function setupServer() {
   );
   app.use("/uploads", express.static(UPLOAD_DIR));
   app.use("/api-docs", swaggerUI.serve, swaggerDocs());
+  app.use("/water", waterRouters);
   app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);
