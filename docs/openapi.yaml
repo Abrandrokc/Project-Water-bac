@@ -24,15 +24,18 @@ paths:
   /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout/post.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh/post.yaml
   /user/avatar:
     put:
-      $ref: ../swagger/paths/user/avatar/put.yaml
-  /user/{userIdParam}:
+      $ref: ../swagger/paths/user/avatar/patch.yaml
+  /user/infoCurrentUser:
     get:
-      $ref: ../swagger/paths/user/{userIdParam}/get.yaml
-  /user/updateUser/{userIdParam}:
+      $ref: ../swagger/paths/user/infoCurrentUser/get.yaml
+  /user/updateUser:
     patch:
-      $ref: ../swagger/paths/user/updateUser/{userIdParam}/patch.yaml
+      $ref: ../swagger/paths/user/updateUser/patch.yaml
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
@@ -54,10 +57,12 @@ components:
     water:
       $ref: ../swagger/components/schemas/water.yaml
   responses:
-    404:
-      $ref: ../swagger/components/responses/404.yaml
     400:
       $ref: ../swagger/components/responses/400.yaml
+    401:
+      $ref: ../swagger/components/responses/401.yaml
+    404:
+      $ref: ../swagger/components/responses/404.yaml
   securitySchemes:
     bearerAuth:
       type: http
