@@ -1,4 +1,9 @@
-import { registerUser, loginUser, logoutUser } from "../servises/auth.js";
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshUsersSession,
+} from "../servises/auth.js";
 import { REFRESH_TOKEN_TTL } from "../constants/index.js";
 
 function setupSession(res, session) {
@@ -31,8 +36,25 @@ export async function loginUserController(req, res) {
   });
 }
 
+export async function refreshUserSessionController(req, res) {
+  const session = await refreshUsersSession({
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
+  });
+
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+}
+
 export async function logoutUserController(req, res) {
-  console.log('Cookies:', req.cookies)
+  console.log("Cookies:", req.cookies);
   if (req.cookies.sessionId && req.cookies.refreshToken) {
     await logoutUser({
       sessionId: req.cookies.sessionId,

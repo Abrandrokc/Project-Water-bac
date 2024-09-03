@@ -41,6 +41,31 @@ export async function loginUser(payload) {
   });
 }
 
+export async function refreshUsersSession({ sessionId, refreshToken }) {
+  const session = await Session.findOne({
+    _id: sessionId,
+    refreshToken,
+  });
+  if (session === null) {
+    throw createHttpError(401, 'Session not found');
+  }
+
+  const isSessionTokenExpired =
+    new Date() > new Date(session.refreshTokenValidUntil);
+
+  if (isSessionTokenExpired) {
+    throw createHttpError(401, 'Session token expired');
+  }
+
+  const newSession = createSession();
+  await Session.deleteOne({ _id: sessionId, refreshToken });
+
+  return await Session.create({
+    userId: session.userId,
+    ...newSession,
+  });
+}
+
 export async function logoutUser({ sessionId, refreshToken }) {
     await Session.deleteOne({ _id: sessionId, refreshToken });
   }

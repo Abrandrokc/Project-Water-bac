@@ -30,7 +30,7 @@ router.put(
 router.get("/:userIdParam", isValidId, ctrlWrapper(getUserByIdController));
 
 router.patch(
-  "/updateUser/:userIdParam",
+  "/updateUser",
   jsonParser,
   validateBody(userSchema),
   ctrlWrapper(patchUserController)
