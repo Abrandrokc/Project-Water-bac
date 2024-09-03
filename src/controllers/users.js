@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 
-import { setAvatar, updateUser } from "../servises/users.js";
+import { setAvatar, updateUser } from "../services/users.js";
 
 import env from "../utils/env.js";
 

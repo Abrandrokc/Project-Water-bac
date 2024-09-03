@@ -3,7 +3,7 @@ import {
   loginUser,
   logoutUser,
   refreshUsersSession,
-} from "../servises/auth.js";
+} from "../services/auth.js";
 import { REFRESH_TOKEN_TTL } from "../constants/index.js";
 
 function setupSession(res, session) {
@@ -43,7 +43,7 @@ export async function refreshUserSessionController(req, res) {
   });
 
   setupSession(res, session);
-
+console.log(session)
   res.json({
     status: 200,
     message: 'Successfully refreshed a session!',
