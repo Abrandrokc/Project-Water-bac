@@ -1,4 +1,4 @@
-import Water from "../db/models/Water.js";
+import Water from "../db/models/water.js";
 
 export const getWaterPerDay = async (date) => {
     const startDate = new Date(date);
@@ -48,12 +48,6 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
         }
        
     daysMap[day].dailyTotal += entry.waterVolume;
-    
-    
-    if (daysMap[day].dailyTotal > daysMap[day].dailyNorm * 1000) {
-        daysMap[day].dailyTotal = daysMap[day].dailyNorm * 1000;
-    }
-
     daysMap[day].consumptionCount += 1;
 });
 
@@ -61,10 +55,7 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
   const dailyInfo = Object.values(daysMap).map(dayInfo => {
     let waterPercent = ((dayInfo.dailyTotal / (dayInfo.dailyNorm * 1000)) * 100);
 
-    if (waterPercent > 100) {
-        waterPercent = 100;
-    }
-
+    
     return {
         ...dayInfo,
         waterPercent: waterPercent.toFixed(2) + '%',
@@ -76,8 +67,8 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
 };
   
 
-export const deleteWaterInfo = id => Water.findOneAndDelete(id)
-export const postWaterInfo = data => Water.create(data)
+export const deleteWaterInfo = id=> Water.findOneAndDelete(id)
+export const postWaterInfo = id => Water.create(id)
 export const patchWaterInfo = async (filter, id, options = {}) => {
     const result = await Water.findOneAndUpdate(filter, id, {
         new: true,

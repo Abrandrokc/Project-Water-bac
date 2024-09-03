@@ -1,6 +1,6 @@
 import { Router } from "express";
 import ctrlWrapper from "../utils/ctrlWrapper.js";
-import { deleteWater, getWaterPerDayInfo, getWaterPerMonthInfo, patchWater, postWater } from "../controlers/water.js";
+import { deleteWater, getWaterPerDayInfo, getWaterPerMonthInfo, patchWater, postWater } from "../controllers/water.js";
 import validateBody from "../middleware/validateBody.js";
 import { WaterNotes, WaterPatchNotes } from "../validation/water.js";
 
