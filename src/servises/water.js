@@ -11,7 +11,8 @@ export const getWaterPerDay = async (date) => {
         createdAt: {
             $gte: startDate.toISOString(), 
             $lt: endDate.toISOString()
-        }
+        },
+        userId: userId
     });
 
     return results;
@@ -26,7 +27,8 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
             createdAt: {
                 $gte: startDate.toISOString(), 
                 $lte: endDate.toISOString()   
-            }
+            },
+             userId: userId
         });
 
           const daysMap = {};

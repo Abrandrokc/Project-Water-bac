@@ -13,7 +13,7 @@ export const postWater = async (req, res) => {
    
 }
 export const patchWater = async (req, res) => {
-    const { waterId } = req.params
+    const { waterId } = req.params;
 
   const { _id: userId } = req.user;
     const result = await patchWaterInfo({ _id: waterId, userId }, req.body)
@@ -29,7 +29,7 @@ export const patchWater = async (req, res) => {
     )
 }
 export const deleteWater = async (req, res) => {
-    const { waterId } = req.body
+    const { waterId } = req.params;
      const { _id: userId } = req.user;
     const result = await deleteWaterInfo({ _id: waterId, userId})
     if (!result) {
@@ -38,7 +38,7 @@ export const deleteWater = async (req, res) => {
     }
 
 
-    res.status(200).json({
+    res.status(204).json({
         status: 204,
         message: "Successfully deleted a water!"
     });
