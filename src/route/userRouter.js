@@ -26,7 +26,7 @@ router.patch(
   ctrlWrapper(patchUserAvatarController)
 );
 
-router.get("/validUser", ctrlWrapper(getValidUser));
+router.get("/infoCurrentUser", ctrlWrapper(getValidUser));
 
 router.patch(
   "/updateUser",
