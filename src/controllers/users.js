@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 
-import { setAvatar, updateUser, getUserById } from "../servises/users.js";
+import { setAvatar, updateUser } from "../servises/users.js";
 
 import env from "../utils/env.js";
 
@@ -14,7 +14,7 @@ export const putUserController = async (req, res, next) => {
   let photoUrl;
 
   if (photo) {
-    if (env('ENABLE_CLOUDINARY') === 'true') {
+    if (env("ENABLE_CLOUDINARY") === "true") {
       photoUrl = await saveFileToCloudinary(photo);
     } else {
       photoUrl = await saveFileToUploadDir(photo);
@@ -28,7 +28,7 @@ export const putUserController = async (req, res, next) => {
   });
 
   if (!result) {
-    next(createHttpError(404, 'User not found'));
+    next(createHttpError(404, "User not found"));
     return;
   }
 
@@ -39,24 +39,20 @@ export const putUserController = async (req, res, next) => {
   });
 };
 
-export async function getUserByIdController(req, res, next) {
-  const { userIdParam } = req.params;
-  const userId = req.user._id;
-  const userById = await getUserById(userIdParam, userId);
-
-  if (userById === null) {
+export async function getValidUser(req, res, next) {
+  const user = req.user;
+  if (user === null) {
     return next(createHttpError(404, "User not found"));
   }
 
   res.status(200).json({
     status: 200,
     message: "Successfully found User!",
-    data: userById,
+    data: user,
   });
 }
 
 export const patchUserController = async (req, res, next) => {
-  const { userIdParam } = req.params;
   const userId = req.user._id;
   const user = req.body;
   const result = await updateUser({

@@ -1,4 +1,5 @@
 import { UsersCollection } from "../db/models/users.js";
+import bcrypt from "bcrypt";
 
 export const setAvatar = async (uploadPhoto) => {
   const updateData = { ...uploadPhoto.photo };
@@ -18,20 +19,19 @@ export const setAvatar = async (uploadPhoto) => {
   };
 };
 
-export async function getUserById(userIdParam) {
-  const userById = await UsersCollection.findOne({ _id: userIdParam });
-  return userById;
-}
-
 export const updateUser = async (payload) => {
   console.log(payload);
   const updateData = { ...payload.user };
+  if (payload.user.password) {
+    const encryptedPassword = await bcrypt.hash(payload.user.password, 10);
+    updateData.password = encryptedPassword;
+  }
   const updateUser = await UsersCollection.findOneAndUpdate(
     { _id: payload.userId },
-    updateData,
+    { $set: updateData },
     { new: true }
   );
-
+  console.log(updateUser);
   return {
     user: updateUser,
     isNew: Boolean(updateUser?.lastErrorObject?.upserted),
