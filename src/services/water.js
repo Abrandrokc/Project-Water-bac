@@ -1,4 +1,4 @@
-import Water from "../db/models/Water.js";
+import Water from "../db/models/water.js";
 
 export const getWaterPerDay = async (date) => {
     const startDate = new Date(date);
