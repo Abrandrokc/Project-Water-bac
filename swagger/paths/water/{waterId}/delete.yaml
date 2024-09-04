@@ -1,0 +1,33 @@
+tags:
+  - Water
+summary: Delete a water intake record
+operationId: deleteWater
+description: "Delete a water intake record by ID"
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: waterId
+    required: true
+    schema:
+      type: string
+      example: "66785ee7009eeec396e0e546"
+    description: "The ID of the water intake record to delete"
+responses:
+  "200":
+    description: "Successfully deleted the water intake record"
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: "Successfully deleted a water intake record!"
+  "404":
+    $ref: "../../../components/responses/404.yaml"
+  "400":
+    $ref: "../../../components/responses/400.yaml"
