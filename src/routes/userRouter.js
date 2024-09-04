@@ -26,10 +26,10 @@ router.patch(
   ctrlWrapper(patchUserAvatarController)
 );
 
-router.get("/infoCurrentUser", ctrlWrapper(getValidUser));
+router.get("/userInfo", ctrlWrapper(getValidUser));
 
 router.patch(
-  "/updateUser",
+  "/",
   jsonParser,
   validateBody(userSchema),
   ctrlWrapper(patchUserController)
