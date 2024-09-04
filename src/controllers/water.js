@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import { deleteWaterInfo, getWaterPerDay, getWaterPerMonth, patchWaterInfo, postWaterInfo } from "../servises/water.js";
+import { deleteWaterInfo, getWaterPerDay, getWaterPerMonth, patchWaterInfo, postWaterInfo } from "../services/water.js";
 import { drinkWaterProcent } from "../utils/drinkWaterProcent.js";
 import { UsersCollection } from "../db/models/users.js";
 
