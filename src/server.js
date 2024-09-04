@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import env from "./utils/env.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 import errorHandler from "./middleware/errorHandler.js";
-import waterRouters from "./routes/waterRoute.js";
+import router from "./routes/index.js";
 
 
 
@@ -23,7 +23,7 @@ export default function setupServer() {
     },
   })
 );
-app.use("/water", waterRouters)
+app.use(router);
     app.use(notFoundHandler)
   app.use(errorHandler)
   
