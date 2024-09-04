@@ -7,17 +7,6 @@ const usersSchema = new Schema(
     photo: {
       type: String,
     },
-    gender: {
-      type: String,
-      enum: ["woman", "man"],
-      default: "woman",
-    },
-    waterAmount: {
-      type: Number,
-      default: 1.5,
-    },
-    weight: { type: Number, default: 0 },
-    sportHours: { type: Number, default: 0 },
   },
   { timestamps: true, versionKey: false }
 );
