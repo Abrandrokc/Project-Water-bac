@@ -11,9 +11,11 @@ tags:
     description: Operations about water.
   - name: Auth
     description: Auth operations.
+  - name: User
+    description: User operations.
 servers:
+  - url: https://project-water-bac.onrender.com
   - url: http://localhost:3000
-  - url: https://example.com/api/v1
 paths:
   /auth/register:
     post:
@@ -39,11 +41,11 @@ paths:
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
-  /water/{waterId}:
+  /water/{id}:
     patch:
-      $ref: ../swagger/paths/water/{waterId}/patch.yaml
+      $ref: ../swagger/paths/water/{id}/patch.yaml
     delete:
-      $ref: ../swagger/paths/water/{waterId}/delete.yaml
+      $ref: ../swagger/paths/water/{id}/delete.yaml
   /water/perDay:
     get:
       $ref: ../swagger/paths/water/perDay/get.yaml
