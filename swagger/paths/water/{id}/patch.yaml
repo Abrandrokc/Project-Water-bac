@@ -7,7 +7,7 @@ security:
   - bearerAuth: []
 parameters:
   - in: path
-    name: waterId
+    name: id
     schema:
       type: string
       example: "66785ee7009eeec396e0e546"
