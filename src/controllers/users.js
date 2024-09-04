@@ -10,7 +10,6 @@ import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
 export const patchUserAvatarController = async (req, res, next) => {
   const userId = req.user._id;
   const photo = req.file;
-  const user = req.body;
   let photoUrl;
 
   if (photo) {
@@ -20,9 +19,8 @@ export const patchUserAvatarController = async (req, res, next) => {
       photoUrl = await saveFileToUploadDir(photo);
     }
   }
-
   const result = await setAvatar({ userId, photo: photoUrl });
-  console.log(result);
+  
   if (!result) {
     next(createHttpError(404, "User not found"));
     return;
