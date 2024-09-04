@@ -1,6 +1,6 @@
 import Water from "../db/models/water.js";
 
-export const getWaterPerDay = async (date) => {
+export const getWaterPerDay = async (date, userId) => {
     const startDate = new Date(date);
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 1); 
@@ -17,12 +17,13 @@ export const getWaterPerDay = async (date) => {
 
     return results;
 };
-export const getWaterPerMonth = async (firstDate, secondDate) => {
+export const getWaterPerMonth = async (firstDate, secondDate,userId) => {
    console.log(firstDate)
     console.log(secondDate)
         const startDate = new Date(firstDate);
     const endDate = new Date(secondDate);
-     
+     const user =  await UsersCollection.findById(userId)
+    const dailyNorma = user.waterAmount
         const results = await Water.find({
             createdAt: {
                 $gte: startDate.toISOString(), 
@@ -45,7 +46,7 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
                 date: `${day}, ${month}`,
                 dailyTotal: 0,
                 consumptionCount: 0,
-                dailyNorm: 1.8,
+                dailyNorm: dailyNorma,
             };
         }
        

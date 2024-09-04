@@ -1,6 +1,7 @@
 import createHttpError from "http-errors";
 import { deleteWaterInfo, getWaterPerDay, getWaterPerMonth, patchWaterInfo, postWaterInfo } from "../services/water.js";
 import { drinkWaterProcent } from "../utils/drinkWaterProcent.js";
+import { UsersCollection } from "../db/models/users.js";
 
 export const postWater = async (req, res) => {
    const { _id: userId } = req.user;
@@ -47,11 +48,13 @@ export const getWaterPerDayInfo = async (req, res) => {
     const { date } = req.body
      const { _id: userId } = req.user;
     const parsedDate = new Date(date);
+    const user = await UsersCollection.findById(userId)
+    const dailyNorm = user.waterAmount
 const results = await getWaterPerDay( parsedDate, userId)
      if (results.length === 0) {
     throw createHttpError(404, "Water info not found");
     }
-   let Procent = drinkWaterProcent(results)
+   let Procent = drinkWaterProcent(results,dailyNorm)
     console.log(results)
     
     res.status(200).json(
