@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: WaterTracker app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of WaterTracker app
+tags:
+  - name: Water
+    description: Operations about water.
+  - name: Auth
+    description: Auth operations.
+servers:
+  - url: http://localhost:3000
+  - url: https://example.com/api/v1
+paths:
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register/post.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login/post.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout/post.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh/post.yaml
+  /users/avatar:
+    put:
+      $ref: ../swagger/paths/users/avatar/patch.yaml
+  /users/userInfo:
+    get:
+      $ref: ../swagger/paths/users/userInfo/get.yaml
+  /users:
+    patch:
+      $ref: ../swagger/paths/users/patch.yaml
+  /water:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+  /water/{waterId}:
+    patch:
+      $ref: ../swagger/paths/water/{waterId}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/water/{waterId}/delete.yaml
+  /water/perDay:
+    get:
+      $ref: ../swagger/paths/water/perDay/get.yaml
+  /water/perMonth:
+    get:
+      $ref: ../swagger/paths/water/perMonth/get.yaml
+components:
+  schemas:
+    user:
+      $ref: ../swagger/components/schemas/user.yaml
+    water:
+      $ref: ../swagger/components/schemas/water.yaml
+  responses:
+    400:
+      $ref: ../swagger/components/responses/400.yaml
+    401:
+      $ref: ../swagger/components/responses/401.yaml
+    404:
+      $ref: ../swagger/components/responses/404.yaml
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

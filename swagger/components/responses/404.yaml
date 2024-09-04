@@ -1,0 +1,19 @@
+description: Not found error
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - errors
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Resource not found
+        errors:
+          type: array
+          example: []
