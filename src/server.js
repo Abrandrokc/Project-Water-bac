@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import env from "./utils/env.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 import errorHandler from "./middleware/errorHandler.js";
-import waterRouters from "./route/waterRoute.js";
+import waterRouters from "./routes/waterRoute.js";
 
 
 
