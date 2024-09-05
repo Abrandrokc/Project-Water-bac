@@ -43,25 +43,5 @@ export default function setupServer() {
   app.listen(port, () => console.log(`Server is running on port ${port} `));
 }
 
-export default function setupServer() {
-  dotenv.config()
-  const port = env("PORT","3000")
 
-  const app = express()
-  app.use(express.json())
-    app.use(cors());
-  app.use(
-    pino({
-      transport: {
-        target: 'pino-pretty',
-      },
-    }),
-  );
-
-  app.use("/api-docs", swaggerUI.serve, swaggerDocs());
-app.use(router)
-  app.use(notFoundHandler)
-  app.use(errorHandler)
-  app.listen(port, () => console.log(`Server is running on port ${port} `))
-}
 
