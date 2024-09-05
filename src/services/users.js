@@ -36,3 +36,16 @@ export const updateUser = async (payload) => {
     isNew: Boolean(updateUser?.lastErrorObject?.upserted),
   };
 };
+export const adwaterAmound = async (payload) => {
+  const { userId, waterAmount } = payload;
+  const updateData = { waterAmount }; 
+  const updateUser = await UsersCollection.findOneAndUpdate(
+    { _id: userId },
+    { $set: updateData },
+    { new: true }
+  );
+  return {
+    user: updateUser,
+    isNew: Boolean(updateUser?.lastErrorObject?.upserted),
+  };
+};

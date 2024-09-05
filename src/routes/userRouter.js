@@ -12,6 +12,7 @@ import {
   patchUserAvatarController,
   patchUserController,
   getValidUser,
+  patchWaterAmount,
 } from "../controllers/users.js";
 
 const router = Router();
@@ -34,5 +35,10 @@ router.patch(
   validateBody(userSchema),
   ctrlWrapper(patchUserController)
 );
-
+router.patch(
+  "/waterAmount",
+  jsonParser,
+  validateBody(userSchema),
+  ctrlWrapper(patchWaterAmount)
+);
 export default router;
