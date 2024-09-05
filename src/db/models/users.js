@@ -6,20 +6,16 @@ const usersSchema = new Schema(
     password: { type: String, required: true },
     photo: {
       type: String,
-      default:
-        "https://res-console.cloudinary.com/dnqr5yhqk/media_explorer_thumbnails/0eaa91722b8e37a8997ee00987cfef40/detailed",
     },
     gender: {
       type: String,
       enum: ["woman", "man"],
-      default: "woman",
     },
     waterAmount: {
       type: Number,
-      default: 1.5,
     },
-    weight: { type: Number, default: 0 },
-    sportHours: { type: Number, default: 0 },
+    weight: { type: Number },
+    sportHours: { type: Number },
   },
   { timestamps: true, versionKey: false }
 );
