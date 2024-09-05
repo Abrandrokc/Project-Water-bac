@@ -4,11 +4,14 @@ import { deleteWater, getWaterPerDayInfo, getWaterPerMonthInfo, patchWater, post
 import validateBody from "../middleware/validateBody.js";
 import { WaterNotes, WaterPatchNotes } from "../validation/water.js";
 
-const waterRouters = Router();
+import { authenticate } from "../middleware/authenticate.js";
 
+const waterRouters = Router();
+waterRouters.use(authenticate)
 waterRouters.post("/",validateBody(WaterNotes) , ctrlWrapper(postWater) );
-waterRouters.patch("/:date", validateBody(WaterPatchNotes), ctrlWrapper(patchWater));
-waterRouters.delete("/:date", ctrlWrapper(deleteWater));
+waterRouters.patch("/:id", validateBody(WaterPatchNotes), ctrlWrapper(patchWater));
+waterRouters.delete("/:id", ctrlWrapper(deleteWater));
+
 waterRouters.get("/perDay", ctrlWrapper(getWaterPerDayInfo));
 waterRouters.get("/perMonth", ctrlWrapper(getWaterPerMonthInfo));
 

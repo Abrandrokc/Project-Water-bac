@@ -11,10 +11,17 @@
   },
   "servers": [
     {
+<<<<<<< HEAD
       "url": "http://localhost:3000"
     },
     {
       "url": "https://example.com/api/v1"
+=======
+      "url": "https://project-water-bac.onrender.com"
+    },
+    {
+      "url": "http://localhost:3000"
+>>>>>>> origin/main
     }
   ],
   "tags": [
@@ -56,12 +63,17 @@
                     "type": "string",
                     "format": "email",
                     "example": "user@example.com",
+<<<<<<< HEAD
                     "description": "The user's email address"
+=======
+                    "description": "The user's email address. Must be unique."
+>>>>>>> origin/main
                   },
                   "password": {
                     "type": "string",
                     "format": "password",
                     "example": "password123",
+<<<<<<< HEAD
                     "description": "The user's password"
                   },
                   "name": {
@@ -98,6 +110,9 @@
                     "type": "number",
                     "example": 2,
                     "description": "The user's weekly sport activity in hours"
+=======
+                    "description": "The user's password. Must be 8 to 64 symbols."
+>>>>>>> origin/main
                   }
                 }
               }
@@ -285,7 +300,11 @@
         ],
         "summary": "Refresh the user session",
         "operationId": "refreshUserSession",
+<<<<<<< HEAD
         "description": "This endpoint refreshes the user session by generating new access and refresh tokens.  It requires a valid session ID and refresh token to be provided in the request cookies.\n",
+=======
+        "description": "This endpoint refreshes the user session by generating new access and refresh tokens.\n",
+>>>>>>> origin/main
         "requestBody": {
           "required": false,
           "content": {
@@ -304,7 +323,11 @@
         ],
         "responses": {
           "200": {
+<<<<<<< HEAD
             "description": "Successfully refreshed user session",
+=======
+            "description": "Successfully refreshed user's session",
+>>>>>>> origin/main
             "content": {
               "application/json": {
                 "schema": {
@@ -321,7 +344,11 @@
                     },
                     "message": {
                       "type": "string",
+<<<<<<< HEAD
                       "example": "Successfully refreshed user session!"
+=======
+                      "example": "Successfully refreshed user's session!"
+>>>>>>> origin/main
                     },
                     "data": {
                       "type": "object",
@@ -349,7 +376,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "/user/avatar": {
+=======
+    "/users/avatar": {
+>>>>>>> origin/main
       "put": {
         "tags": [
           "User"
@@ -401,10 +432,16 @@
                       "example": "Successfully updated user!"
                     },
                     "data": {
+<<<<<<< HEAD
                       "type": "string",
                       "format": "uri",
                       "example": "https://example.com/photo.jpg",
                       "description": "URL of the updated user avatar."
+=======
+                      "description": "Link to updated user's photo",
+                      "type": "string",
+                      "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+>>>>>>> origin/main
                     }
                   }
                 }
@@ -423,7 +460,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "/user/infoCurrentUser": {
+=======
+    "/users/userInfo": {
+>>>>>>> origin/main
       "get": {
         "tags": [
           "User"
@@ -478,7 +519,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "/user/updateUser": {
+=======
+    "/users": {
+>>>>>>> origin/main
       "patch": {
         "tags": [
           "User"
@@ -657,14 +702,22 @@
         }
       }
     },
+<<<<<<< HEAD
     "/water/{date}": {
+=======
+    "/water/{waterId}": {
+>>>>>>> origin/main
       "patch": {
         "tags": [
           "Water"
         ],
         "summary": "Update a water intake record",
         "operationId": "patchWater",
+<<<<<<< HEAD
         "description": "Update a water intake record by date",
+=======
+        "description": "Update a water intake record by ID",
+>>>>>>> origin/main
         "security": [
           {
             "bearerAuth": []
@@ -673,6 +726,7 @@
         "parameters": [
           {
             "in": "path",
+<<<<<<< HEAD
             "name": "date",
             "schema": {
               "type": "string",
@@ -681,6 +735,15 @@
             },
             "required": true,
             "description": "The date of the record to update"
+=======
+            "name": "waterId",
+            "schema": {
+              "type": "string",
+              "example": "66785ee7009eeec396e0e546"
+            },
+            "required": true,
+            "description": "The ID of the water intake record to update"
+>>>>>>> origin/main
           }
         ],
         "requestBody": {
@@ -746,7 +809,11 @@
         ],
         "summary": "Delete a water intake record",
         "operationId": "deleteWater",
+<<<<<<< HEAD
         "description": "Delete a water intake record based on the provided date",
+=======
+        "description": "Delete a water intake record by ID",
+>>>>>>> origin/main
         "security": [
           {
             "bearerAuth": []
@@ -755,6 +822,7 @@
         "parameters": [
           {
             "in": "path",
+<<<<<<< HEAD
             "name": "date",
             "required": true,
             "schema": {
@@ -763,6 +831,15 @@
               "example": "2024-09-01T14:00"
             },
             "description": "The date of the water intake record to delete"
+=======
+            "name": "waterId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66785ee7009eeec396e0e546"
+            },
+            "description": "The ID of the water intake record to delete"
+>>>>>>> origin/main
           }
         ],
         "responses": {
@@ -966,24 +1043,45 @@
         "description": "Schema representing a user",
         "properties": {
           "_id": {
+<<<<<<< HEAD
+=======
+            "description": "User's ID",
+>>>>>>> origin/main
             "type": "string",
             "example": "64f4b7b8f5e1e5f5a4e8f7b8"
           },
           "email": {
+<<<<<<< HEAD
+=======
+            "description": "User's email",
+>>>>>>> origin/main
             "type": "string",
             "format": "email",
             "example": "user@example.com"
           },
           "name": {
+<<<<<<< HEAD
+=======
+            "description": "User's name",
+>>>>>>> origin/main
             "type": "string",
             "example": "John Doe"
           },
           "photo": {
+<<<<<<< HEAD
             "type": "string",
             "format": "uri",
             "example": "https://example.com/photo.jpg"
           },
           "gender": {
+=======
+            "description": "Link to user's photo",
+            "type": "string",
+            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+          },
+          "gender": {
+            "description": "User's gender",
+>>>>>>> origin/main
             "type": "string",
             "enum": [
               "woman",
@@ -992,14 +1090,26 @@
             "example": "woman"
           },
           "waterAmount": {
+<<<<<<< HEAD
+=======
+            "description": "Daily recommended water intake in liters",
+>>>>>>> origin/main
             "type": "number",
             "example": 1.5
           },
           "weight": {
+<<<<<<< HEAD
+=======
+            "description": "User's weight",
+>>>>>>> origin/main
             "type": "number",
             "example": 70
           },
           "sportHours": {
+<<<<<<< HEAD
+=======
+            "description": "The average amount of time user spends daily on sport activities",
+>>>>>>> origin/main
             "type": "number",
             "example": 2
           }

@@ -19,11 +19,14 @@ requestBody:
             type: string
             format: email
             example: "user@example.com"
-            description: "The user's email address"
+
+            description: "The user's email address. Must be unique."
+
           password:
             type: string
             format: password
             example: "password123"
+
             description: "The user's password"
           name:
             type: string
@@ -53,6 +56,8 @@ requestBody:
             type: number
             example: 2
             description: "The user's weekly sport activity in hours"
+
+            description: "The user's password. Must be 8 to 64 symbols."
 responses:
   "201":
     description: "Successfully registered a user"

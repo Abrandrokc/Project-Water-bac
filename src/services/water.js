@@ -1,6 +1,8 @@
 import Water from "../db/models/water.js";
 
-export const getWaterPerDay = async (date) => {
+
+export const getWaterPerDay = async (date, userId) => {
+
     const startDate = new Date(date);
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 1); 
@@ -11,22 +13,33 @@ export const getWaterPerDay = async (date) => {
         createdAt: {
             $gte: startDate.toISOString(), 
             $lt: endDate.toISOString()
-        }
+
+        },
+        userId: userId
+
     });
 
     return results;
 };
-export const getWaterPerMonth = async (firstDate, secondDate) => {
+
+export const getWaterPerMonth = async (firstDate, secondDate,userId) => {
+
    console.log(firstDate)
     console.log(secondDate)
         const startDate = new Date(firstDate);
     const endDate = new Date(secondDate);
-     
+
+     const user =  await UsersCollection.findById(userId)
+    const dailyNorma = user.waterAmount
+
         const results = await Water.find({
             createdAt: {
                 $gte: startDate.toISOString(), 
                 $lte: endDate.toISOString()   
-            }
+
+            },
+             userId: userId
+
         });
 
           const daysMap = {};
@@ -43,7 +56,9 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
                 date: `${day}, ${month}`,
                 dailyTotal: 0,
                 consumptionCount: 0,
-                dailyNorm: 1.8,
+
+                dailyNorm: dailyNorma,
+
             };
         }
        
@@ -67,10 +82,12 @@ export const getWaterPerMonth = async (firstDate, secondDate) => {
 };
   
 
-export const deleteWaterInfo = date => Water.findOneAndDelete(date)
-export const postWaterInfo = data => Water.create(data)
-export const patchWaterInfo = async (filter, data, options = {}) => {
-    const result = await Water.findOneAndUpdate(filter, data, {
+
+export const deleteWaterInfo = id=> Water.findOneAndDelete(id)
+export const postWaterInfo = id => Water.create(id)
+export const patchWaterInfo = async (filter, id, options = {}) => {
+    const result = await Water.findOneAndUpdate(filter, id, {
+
         new: true,
         includeResultMetadata: true,
         ...options
