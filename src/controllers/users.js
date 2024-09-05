@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 
-import { adwaterAmound, setAvatar, updateUser } from "../services/users.js";
+import { addWaterAmound, setAvatar, updateUser } from "../services/users.js";
 
 import env from "../utils/env.js";
 
@@ -76,7 +76,7 @@ export const patchWaterAmount = async (req, res, next) => {
     waterAmount = Math.round((user.weight * 0.03) + (user.time * 0.4))
   }
   console.log(waterAmount)
-  const result = await adwaterAmound({
+  const result = await addwaterAmound({
     waterAmount,
     userId,
   });
