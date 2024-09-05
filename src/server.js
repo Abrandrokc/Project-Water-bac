@@ -36,7 +36,6 @@ export default function setupServer() {
   );
   app.use("/uploads", express.static(UPLOAD_DIR));
   app.use("/api-docs", swaggerUI.serve, swaggerDocs());
-  app.use("/water", waterRouters);
   app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);
