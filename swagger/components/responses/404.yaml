@@ -16,4 +16,6 @@ content:
           example: Resource not found
         errors:
           type: array
+
           example: []
+

@@ -3,6 +3,10 @@ tags:
 summary: Refresh the user session
 operationId: refreshUserSession
 description: >
+
+  This endpoint refreshes the user session by generating new access and refresh tokens. 
+  It requires a valid session ID and refresh token to be provided in the request cookies.
+
   This endpoint refreshes the user session by generating new access and refresh tokens.
 requestBody:
   required: false
@@ -15,7 +19,9 @@ security:
   - bearerAuth: []
 responses:
   "200":
+
     description: "Successfully refreshed user's session"
+
     content:
       application/json:
         schema:
@@ -30,7 +36,9 @@ responses:
               example: 200
             message:
               type: string
+
               example: "Successfully refreshed user's session!"
+
             data:
               type: object
               properties:

@@ -1,3 +1,4 @@
+
 const ctrlWrapper = controller => {
     const func = async (req, res, next) => {
       try {
@@ -9,3 +10,4 @@ next(error)
     return func
 }
 export default ctrlWrapper
+

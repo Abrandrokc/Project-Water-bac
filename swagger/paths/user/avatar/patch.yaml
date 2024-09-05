@@ -1,0 +1,47 @@
+tags:
+  - User
+summary: Update user's avatar
+operationId: setAvatar
+description: "Uploads and updates the user's avatar."
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          photo:
+            type: string
+            format: binary
+            description: "The avatar image file to upload."
+responses:
+  "200":
+    description: "Successfully updated user avatar."
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: "Successfully updated user!"
+            data:
+              type: string
+              format: uri
+              example: "https://example.com/photo.jpg"
+              description: "URL of the updated user avatar."
+  "400":
+    $ref: "../../../components/responses/400.yaml"
+  "404":
+    $ref: "../../../components/responses/404.yaml"
+  "401":
+    $ref: "../../../components/responses/401.yaml"
