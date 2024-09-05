@@ -1,3 +1,4 @@
+import { UsersCollection } from "../db/models/users.js";
 import Water from "../db/models/water.js";
 
 
@@ -6,7 +7,7 @@ export const getWaterPerDay = async (date, userId) => {
     const startDate = new Date(date);
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 1); 
-    console.log(date)
+    
     console.log(startDate)
      console.log(endDate)
     const results = await Water.find({
@@ -18,7 +19,7 @@ export const getWaterPerDay = async (date, userId) => {
         userId: userId
 
     });
-
+console.log(results)
     return results;
 };
 

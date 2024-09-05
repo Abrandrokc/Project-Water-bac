@@ -9,8 +9,14 @@ const waterSchema = new Schema(
         date: {
             type: String,
              required: true
-        }
+        },
+        userId: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+        required: true
     },
+    },
+    
    {
       timestamps: true,
       versionKey: false,
