@@ -11,8 +11,8 @@ tags:
     description: Operations about water.
   - name: Auth
     description: Auth operations.
-  - name: User
-    description: User operations.
+  - name: Users
+    description: Users operations.
 servers:
   - url: https://project-water-bac.onrender.com
   - url: http://localhost:3000
@@ -35,6 +35,9 @@ paths:
   /users/userInfo:
     get:
       $ref: ../swagger/paths/users/userInfo/get.yaml
+  /users/waterAmount:
+    patch:
+      $ref: ../swagger/paths/users/waterAmount/patch.yaml
   /users:
     patch:
       $ref: ../swagger/paths/users/patch.yaml

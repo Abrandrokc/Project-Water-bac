@@ -1,5 +1,5 @@
 tags:
-  - User
+  - Users
 summary: Update user details
 operationId: updateUser
 description: "Updates the user's details such as email, password, name, and gender."
