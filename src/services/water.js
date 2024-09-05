@@ -23,64 +23,75 @@ console.log(results)
     return results;
 };
 
-export const getWaterPerMonth = async (firstDate, secondDate,userId) => {
+const formatDate = (date) => {
+  const day = date.getDate();
+  const month = date.toLocaleString('default', { month: 'long' });
+  return `${day}, ${month}`;
+};
 
-   console.log(firstDate)
-    console.log(secondDate)
-        const startDate = new Date(firstDate);
-    const endDate = new Date(secondDate);
+export const getWaterPerMonth = async (firstDate, secondDate, userId) => {
+  console.log(firstDate);
+  console.log(secondDate);
 
-     const user =  await UsersCollection.findById(userId)
-    const dailyNorma = user.waterAmount
+  const startDate = new Date(firstDate);
+  const endDate = new Date(secondDate);
 
-        const results = await Water.find({
-            createdAt: {
-                $gte: startDate.toISOString(), 
-                $lte: endDate.toISOString()   
+  const user = await UsersCollection.findById(userId);
+  const dailyNorma = user.waterAmount;
 
-            },
-             userId: userId
+  const results = await Water.find({
+    createdAt: {
+      $gte: startDate.toISOString(),
+      $lte: endDate.toISOString(),
+    },
+    userId: userId,
+  });
 
-        });
+  const daysMap = {};
 
-          const daysMap = {};
+  results.forEach(entry => {
+    const dateObject = new Date(entry.createdAt);
+    const day = dateObject.getDate();
+    const month = dateObject.toLocaleString('default', { month: 'long' });
+    const formattedDate = formatDate(dateObject);
+    daysMap[formattedDate].dailyTotal += entry.waterVolume;
+    daysMap[formattedDate].consumptionCount += 1;
+  });
 
-    results.forEach(entry => {
-         const dateObject = new Date(entry.createdAt);
-        const day = dateObject.getDate(); 
-        const month = dateObject.toLocaleString('default', { month: 'long' }); 
-        console.log(`Day: ${day}, Month: ${month}`);
-
-
-        if (!daysMap[day]) {
-            daysMap[day] = {
-                date: `${day}, ${month}`,
-                dailyTotal: 0,
-                consumptionCount: 0,
-
-                dailyNorm: dailyNorma,
-
-            };
-        }
-       
-    daysMap[day].dailyTotal += entry.waterVolume;
-    daysMap[day].consumptionCount += 1;
-});
-
-    
   const dailyInfo = Object.values(daysMap).map(dayInfo => {
     let waterPercent = ((dayInfo.dailyTotal / (dayInfo.dailyNorm * 1000)) * 100);
-
-    
     return {
-        ...dayInfo,
-        waterPercent: waterPercent.toFixed(2) + '%',
+      ...dayInfo,
+      waterPercent: waterPercent.toFixed(2) + '%',
     };
-});
+  });
 
+  const dates = [];
+  const currentDate = new Date(startDate);
 
-    return dailyInfo;
+  while (currentDate <= endDate) {
+    dates.push(formatDate(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  const existingDataMap = new Map(dailyInfo.map(item => [item.date, item]));
+  const result = dates.map(date => {
+    const entry = existingDataMap.get(date);
+    if (entry) {
+      return entry;
+    }
+    return {
+      date: date,
+      dailyTotal: 0,
+      consumptionCount: 0,
+      dailyNorm: 0,
+      waterPercent: "0%",
+    };
+  });
+
+  return result;
 };
+
   
 
 
