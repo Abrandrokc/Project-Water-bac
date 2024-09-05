@@ -66,7 +66,9 @@
                     "type": "string",
                     "format": "password",
                     "example": "password123",
-                    "description": "The user's password. Must be 8 to 64 symbols."
+                    "minLength": 8,
+                    "maxLength": 64,
+                    "description": "The user's password."
                   }
                 }
               }
@@ -591,6 +593,7 @@
                   },
                   "name": {
                     "type": "string",
+                    "maxLength": 32,
                     "example": "John Doe",
                     "description": "The new name of the user."
                   },
@@ -1031,6 +1034,10 @@
       "user": {
         "type": "object",
         "description": "Schema representing a user",
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "description": "User's email. Must be unique",
@@ -1038,10 +1045,13 @@
             "format": "email",
             "example": "user@example.com"
           },
-          "name": {
-            "description": "User's name. Can be up to 32 symbols.",
+          "password": {
+            "description": "User's password.",
             "type": "string",
-            "example": "John Doe"
+            "format": "password",
+            "minLength": 8,
+            "maxLength": 64,
+            "example": "password123"
           },
           "photo": {
             "description": "Link to user's photo",
