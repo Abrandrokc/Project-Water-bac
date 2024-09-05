@@ -1,4 +1,6 @@
+
 import { model, Schema } from "mongoose";
+import { en } from "../../constants/index.js";
 
 const usersSchema = new Schema(
   {
@@ -7,6 +9,13 @@ const usersSchema = new Schema(
     photo: {
       type: String,
     },
+    gender: {
+      type: String,
+      enum:en
+    },
+    waterAmount: {
+      type: Number
+    }
   },
   { timestamps: true, versionKey: false }
 );
