@@ -1,5 +1,5 @@
 tags:
-  - User
+  - Users
 summary: Update user's avatar
 operationId: setAvatar
 description: "Uploads and updates the user's avatar."

@@ -24,7 +24,9 @@ requestBody:
             type: string
             format: password
             example: "password123"
-            description: "The user's password. Must be 8 to 64 symbols."
+            minLength: 8
+            maxLength: 64
+            description: "The user's password."
 responses:
   "201":
     description: "Successfully registered a user"
