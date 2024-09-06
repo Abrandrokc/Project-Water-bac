@@ -76,7 +76,8 @@ const results = await getWaterPerDay( parsedDate, userId)
 }
 export const getWaterPerMonthInfo = async (req, res) => {
     const { firstDate, lastDate } = req.body;
-
+console.log(firstDate)
+    console.log(lastDate)
     const { _id: userId } = req.user;
 
    const date1 = new Date(firstDate)
