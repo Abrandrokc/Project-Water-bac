@@ -1,5 +1,5 @@
 tags:
-  - User
+  - Users
 summary: Update user details
 operationId: updateUser
 description: "Updates the user's details such as email, password, name, and gender."
@@ -33,6 +33,7 @@ requestBody:
             description: "The user's old password, required to change the password."
           name:
             type: string
+            maxLength: 32
             example: "John Doe"
             description: "The new name of the user."
           gender:

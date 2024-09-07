@@ -3,6 +3,7 @@ description: Schema representing a water intake record
 required:
   - waterVolume
   - date
+  - userId
 properties:
   waterVolume:
     type: number
@@ -13,3 +14,8 @@ properties:
     format: date
     description: "The date of water consumption"
     example: "2024-09-01T14:00"
+  userId:
+    type: string
+    description: "The ID of the user who consumed the water"
+    example: "64d5f1f85ecf4b25f8877e51"
+    format: objectId

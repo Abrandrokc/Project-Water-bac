@@ -1,0 +1,64 @@
+tags:
+  - Users
+summary: Update user's daily water amount
+operationId: patchWaterAmount
+description: "Calculate and update the user's daily water amount based on gender, weight, and active time."
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          gender:
+            type: string
+            enum: [male, female]
+            description: "The gender of the user, which influences the water amount calculation."
+            example: "male"
+          weight:
+            type: number
+            description: "The weight of the user in kilograms."
+            example: 75
+          time:
+            type: number
+            description: "The active time of the user in hours."
+            example: 2
+responses:
+  "200":
+    description: "Successfully updated user's daily water amount."
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: "Successfully updated waterAmount!"
+            data:
+              type: number
+              example: 3000
+              description: "The newly calculated daily water amount in milliliters."
+  "400":
+    description: "Bad request, invalid input."
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: "Invalid input provided."
+  "404":
+    $ref: "../../../components/responses/404.yaml"
