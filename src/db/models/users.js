@@ -14,7 +14,8 @@ const usersSchema = new Schema(
       enum:en
     },
     waterAmount: {
-      type: Number
+      type: Number,
+      default: 1.5
     }
   },
   { timestamps: true, versionKey: false }
