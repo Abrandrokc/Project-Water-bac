@@ -5,6 +5,7 @@ import {
   refreshUsersSession,
 } from "../services/auth.js";
 import { REFRESH_TOKEN_TTL } from "../constants/index.js";
+import { loginOrSignupWithGoogle } from '../services/auth.js';
 
 function setupSession(res, session) {
   res.cookie("refreshToken", session.refreshToken, {
@@ -66,3 +67,27 @@ export async function logoutUserController(req, res) {
 
   res.status(204).send();
 }
+
+export const getGoogleOAuthUrlController = async (req, res) => {
+  const url = generateAuthUrl();
+  res.json({
+    status: 200,
+    message: 'Successfully get Google OAuth url!',
+    data: {
+      url,
+    },
+  });
+};
+
+export const loginWithGoogleController = async (req, res) => {
+  const session = await loginOrSignupWithGoogle(req.body.code);
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully logged in via Google OAuth!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+};
