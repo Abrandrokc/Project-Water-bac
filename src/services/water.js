@@ -36,7 +36,7 @@ export const getWaterPerMonth = async (firstDate, secondDate, userId) => {
   const startDate = new Date(firstDate);
   const endDate = new Date(secondDate);
 
-  
+ 
   const user = await UsersCollection.findById(userId);
   const dailyNorma = user.waterAmount;
 
@@ -65,12 +65,12 @@ export const getWaterPerMonth = async (firstDate, secondDate, userId) => {
       };
     }
 
-   
+    
     daysMap[formattedDate].dailyTotal += entry.waterVolume;
     daysMap[formattedDate].consumptionCount += 1;
   });
 
-
+  
   const dailyInfo = Object.values(daysMap).map(dayInfo => {
     const waterPercent = ((dayInfo.dailyTotal / (dayInfo.dailyNorm * 1000)) * 100);
     return {
@@ -87,7 +87,7 @@ export const getWaterPerMonth = async (firstDate, secondDate, userId) => {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  
+ 
   const existingDataMap = new Map(dailyInfo.map(item => [item.date, item]));
   const result = dates.map(date => {
     const entry = existingDataMap.get(date);
@@ -98,13 +98,14 @@ export const getWaterPerMonth = async (firstDate, secondDate, userId) => {
       date: date,
       dailyTotal: 0,
       consumptionCount: 0,
-      dailyNorm: dailyNorma,
+      dailyNorm: dailyNorma, 
       waterPercent: "0%",
     };
   });
 
   return result;
 };
+
 
   
 
