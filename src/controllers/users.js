@@ -70,16 +70,17 @@ export const patchUserController = async (req, res, next) => {
 export const patchWaterAmount = async (req, res, next) => {
   const userId = req.user._id;
   const user = req.body;
-  console.log(user)
   let waterAmount 
   if (user.gender === "male") {
     waterAmount = Math.round((user.weight * 0.04) + (user.time * 0.6))
   } else {
     waterAmount = Math.round((user.weight * 0.03) + (user.time * 0.4))
   }
-  console.log(waterAmount)
+  if (waterAmount > 1.5) {
+    waterAmount=1.5
+  }
 
-  const result = await addwaterAmound({
+  const result = await addWaterAmound({
 
     waterAmount,
     userId,
