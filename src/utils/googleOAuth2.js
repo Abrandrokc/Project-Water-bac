@@ -3,21 +3,18 @@ import path from 'node:path';
 import { readFile } from 'fs/promises';
 import createHttpError from 'http-errors';
 
-import { env } from './env.js';
+import env  from './env.js';
 
 const PATH_JSON = path.join(process.cwd(), 'google-oauth.json');
 
 let oauthConfig;
 
 async function loadOAuthConfig() {
-  try {
-    const configContent = await readFile(PATH_JSON);
-    oauthConfig = JSON.parse(configContent);
-  } catch (error) {
-    throw createHttpError(500, 'Failed to load Google OAuth configuration');
-  }
+  
+  const configContent = await readFile(PATH_JSON, 'utf-8');
+  oauthConfig = JSON.parse(configContent);
+  
 }
-
 await loadOAuthConfig();
 
 const googleOAuthClient = new OAuth2Client({
