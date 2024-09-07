@@ -4,12 +4,17 @@ import { Router } from "express";
 import ctrlWrapper from "../utils/ctrlWrapper.js";
 import validateBody from "../middleware/validateBody.js";
 
-import { registerUserSchema, loginUserSchema } from "../validation/auth.js";
+import {
+  registerUserSchema,
+  loginUserSchema,
+  loginWithGoogleOAuthSchema,
+} from "../validation/auth.js";
 import {
   registerUserController,
   loginUserController,
   logoutUserController,
   refreshUserSessionController,
+  loginWithGoogleController,
 } from "../controllers/auth.js";
 
 const router = Router();
@@ -20,6 +25,14 @@ router.post(
   jsonParser,
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController)
+);
+
+router.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
+
+router.post(
+  '/confirm-oauth',
+  validateBody(loginWithGoogleOAuthSchema),
+  ctrlWrapper(loginWithGoogleController),
 );
 
 router.post(
