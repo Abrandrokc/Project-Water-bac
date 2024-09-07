@@ -15,6 +15,7 @@ import {
   logoutUserController,
   refreshUserSessionController,
   loginWithGoogleController,
+  getGoogleOAuthUrlController,
 } from "../controllers/auth.js";
 
 const router = Router();
