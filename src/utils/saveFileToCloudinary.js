@@ -11,12 +11,20 @@ cloudinary.config({
   api_secret: env(CLOUDINARY.API_SECRET),
 });
 
-export async function saveFileToCloudinary(file) {
-  console.log(file.filename);
+export async function saveFileToCloudinary(file, folder) {
   if (!file) {
     throw new Error("No file provided for upload");
   }
-  const response = await cloudinary.uploader.upload(file.path);
-  await fs.unlink(file.path);
-  return response.secure_url;
+  try {
+    console.log(`Uploading file ${file.path} to Cloudinary in folder ${folder}`);
+    const response = await cloudinary.uploader.upload(file.path, {
+      folder,
+    });
+    await fs.unlink(file.path); // Ensure file is deleted after upload
+    return response.secure_url;
+  } catch (error) {
+    console.error("Error uploading file to Cloudinary:", error.message);
+    throw error;
+  }
 }
+

@@ -7,7 +7,7 @@ import { addWaterAmound, setAvatar, updateUser } from "../services/users.js";
 import env from "../utils/env.js";
 
 import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
-import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
+
 
 export const patchUserAvatarController = async (req, res, next) => {
   const userId = req.user._id;
@@ -15,17 +15,20 @@ export const patchUserAvatarController = async (req, res, next) => {
   let photoUrl;
 
   if (photo) {
-    if (env("ENABLE_CLOUDINARY") === "true") {
-      photoUrl = await saveFileToCloudinary(photo);
-    } else {
-      photoUrl = await saveFileToUploadDir(photo);
+    try {
+      
+        photoUrl = await saveFileToCloudinary(photo, "photo");
+      
+    } catch (error) {
+      console.error("Error saving file:", error);
+      return next(createHttpError(500, "Error uploading file"));
     }
   }
+
   const result = await setAvatar({ userId, photo: photoUrl });
   
   if (!result) {
-    next(createHttpError(404, "User not found"));
-    return;
+    return next(createHttpError(404, "User not found"));
   }
 
   res.json({
@@ -34,6 +37,7 @@ export const patchUserAvatarController = async (req, res, next) => {
     data: result.user,
   });
 };
+
 
 export async function getValidUser(req, res, next) {
   const user = req.user;
