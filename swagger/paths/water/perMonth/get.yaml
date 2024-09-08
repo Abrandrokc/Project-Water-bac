@@ -2,26 +2,25 @@ tags:
   - Water
 summary: Get water intake information for a specific month
 operationId: getWaterPerMonthInfo
-description: "Retrieves water intake records for a specific month"
+description: "Retrieves water intake records for a specific month, including daily totals and consumption counts."
 security:
   - bearerAuth: []
-requestBody:
-  required: true
-  content:
-    application/json:
-      schema:
-        type: object
-        properties:
-          firstDate:
-            type: string
-            format: date
-            example: "2024-09-01"
-            description: "The starting date of the month for which to retrieve water intake information"
-          lastDate:
-            type: string
-            format: date
-            example: "2024-09-30"
-            description: "The ending date of the month for which to retrieve water intake information"
+parameters:
+  - in: query
+    name: firstDate
+    schema:
+      type: string
+      format: date
+      example: "2024-09-01"
+      description: "The starting date of the month for which to retrieve water intake information."
+  - in: query
+    name: lastDate
+    schema:
+      type: string
+      format: date
+      example: "2024-09-30"
+      description: "The ending date of the month for which to retrieve water intake information."
+
 responses:
   "200":
     description: "Successfully retrieved water intake information for the specified month"
@@ -29,6 +28,10 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
             status:
               type: integer
@@ -43,23 +46,25 @@ responses:
                 properties:
                   date:
                     type: string
-                    example: "1, September"
+                    example: "2024-09-01"
+                    description: "The date of water consumption."
                   dailyTotal:
                     type: number
                     example: 1500
+                    description: "The total amount of water consumed on this date in milliliters."
                   consumptionCount:
                     type: integer
                     example: 3
+                    description: "The number of water consumption entries recorded on this date."
                   dailyNorm:
                     type: number
-                    example: 1.8
-                    description: "Daily recommended water intake in liters"
+                    example: 1800
+                    description: "The recommended daily water intake for the user in milliliters."
                   waterPercent:
                     type: string
                     example: "83.33%"
+                    description: "The percentage of the daily water intake achieved for this date."
   "404":
     $ref: "../../../components/responses/404.yaml"
   "400":
-
     $ref: "../../../components/responses/400.yaml"
-

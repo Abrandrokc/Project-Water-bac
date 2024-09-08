@@ -30,7 +30,7 @@ paths:
     post:
       $ref: ../swagger/paths/auth/refresh/post.yaml
   /users/avatar:
-    put:
+    patch:
       $ref: ../swagger/paths/users/avatar/patch.yaml
   /users/userInfo:
     get:
