@@ -60,6 +60,7 @@ const results = await getWaterPerDay( parsedDate, userId)
      if (results.length === 0) {
     throw createHttpError(404, "Water info not found");
     }
+    console.log(results)
    let Procent = drinkWaterProcent(results,dailyNorm)
 
     console.log(results)
