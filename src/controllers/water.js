@@ -50,7 +50,7 @@ export const deleteWater = async (req, res) => {
     });
 }
 export const getWaterPerDayInfo = async (req, res) => {
-    const { date } = req.body
+    const { date } = req.query
 
      const { _id: userId } = req.user;
     const parsedDate = new Date(date);
@@ -75,23 +75,36 @@ const results = await getWaterPerDay( parsedDate, userId)
 
 }
 export const getWaterPerMonthInfo = async (req, res) => {
-    const { firstDate, lastDate } = req.body;
-console.log(firstDate)
-    console.log(lastDate)
-    const { _id: userId } = req.user;
+    try {
+      console.log('Received query params:', req.query);
+    const { firstDate, lastDate } = req.query;
 
-   const date1 = new Date(firstDate)
-    const date2 = new Date(lastDate)
-   
-    if (isNaN(date1) || isNaN(date2)) {
-        throw createHttpError(400, "Invalid date format");
+    if (!firstDate || !lastDate) {
+      throw createHttpError(400, "Missing required date parameters");
     }
 
-    const results = await getWaterPerMonth(date1, date2, userId)
+    const { _id: userId } = req.user;
+
+    const date1 = new Date(firstDate);
+    const date2 = new Date(lastDate);
+
+    if (isNaN(date1) || isNaN(date2)) {
+      throw createHttpError(400, "Invalid date format");
+    }
+
+    const results = await getWaterPerMonth(date1, date2, userId);
 
     res.status(200).json({
-            status: 200,
-            message: "Water data retrieved successfully",
-            data: results,
-        });
-}
+      status: 200,
+      message: "Water data retrieved successfully",
+      data: results,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      status: 400,
+      message: error.message || "Unexpected error",
+      data: error.toString(),
+    });
+  }
+};
