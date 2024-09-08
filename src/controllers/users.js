@@ -3,9 +3,6 @@ import createHttpError from "http-errors";
 
 import { addWaterAmound, setAvatar, updateUser } from "../services/users.js";
 
-
-import env from "../utils/env.js";
-
 import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
 
 
