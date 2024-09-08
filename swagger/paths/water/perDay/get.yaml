@@ -2,21 +2,17 @@ tags:
   - Water
 summary: Get information on water intake for a day
 operationId: getWaterPerDayInfo
-description: "Retrieves water intake records for a specific day"
+description: "Retrieves water intake records for a specific day, including the percentage of daily water intake based on user-specific water norms."
 security:
   - bearerAuth: []
-requestBody:
-  required: true
-  content:
-    application/json:
-      schema:
-        type: object
-        properties:
-          date:
-            type: string
-            format: date
-            example: "2024-09-01"
-            description: "The date for which to retrieve water intake information"
+parameters:
+  - in: query
+    name: date
+    schema:
+      type: string
+      format: date
+      example: "2024-09-01"
+      description: "The date for which to retrieve water intake information."
 responses:
   "200":
     description: "Successfully retrieved water intake information for the specified day"
@@ -24,6 +20,10 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - WaterProcent
+            - data
           properties:
             status:
               type: integer
