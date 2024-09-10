@@ -5,7 +5,7 @@ import {
   refreshUsersSession,
 } from "../services/auth.js";
 import { REFRESH_TOKEN_TTL } from "../constants/index.js";
-import { generateAuthUrl, getGoogleAccountFromCode } from '../utils/googleOAuth.js';
+import { generateAuthUrl, getGoogleAccountFromCode } from '../utils/googleOAuth2.js';
 import jwt from 'jsonwebtoken';
 
 
