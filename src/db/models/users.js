@@ -4,6 +4,7 @@ import { en } from "../../constants/index.js";
 
 const usersSchema = new Schema(
   {
+    googleId: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     photo: {
