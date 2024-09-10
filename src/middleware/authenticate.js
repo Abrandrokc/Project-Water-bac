@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors';
 import jwt from 'jsonwebtoken';
-import { env } from '../utils/env.js';
+import env from '../utils/env.js';
 import { Session } from '../db/models/session.js';
 import { UsersCollection } from '../db/models/users.js';
 

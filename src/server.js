@@ -13,7 +13,6 @@ import env from "./utils/env.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 import errorHandler from "./middleware/errorHandler.js";
 import router from "./routes/index.js";
-import authRoutes from './routes/authRouter.js';
 
 
 import { swaggerDocs } from "./middleware/swaggerDocs.js";
@@ -37,7 +36,6 @@ export default function setupServer() {
   );
   app.use("/uploads", express.static(UPLOAD_DIR));
   app.use("/api-docs", swaggerUI.serve, swaggerDocs());
-  app.use('/auth', authRoutes);
   app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);

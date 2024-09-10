@@ -1,5 +1,5 @@
 import { OAuth2Client } from 'google-auth-library';
-import { env } from './env.js';  // Припустимо, у вас є файл env.js для обробки змінних середовища
+import  env  from './env.js';
 
 const googleOAuthClient = new OAuth2Client({
   clientId: env('GOOGLE_AUTH_CLIENT_ID'),
