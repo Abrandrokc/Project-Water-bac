@@ -5,7 +5,9 @@ import {
   refreshUsersSession,
 } from "../services/auth.js";
 import { REFRESH_TOKEN_TTL } from "../constants/index.js";
-import { loginOrSignupWithGoogle } from '../services/auth.js';
+import { generateAuthUrl, getGoogleAccountFromCode } from '../utils/googleOAuth.js';
+import jwt from 'jsonwebtoken';
+
 
 function setupSession(res, session) {
   res.cookie("refreshToken", session.refreshToken, {
@@ -17,6 +19,36 @@ function setupSession(res, session) {
     expires: new Date(Date.now() + REFRESH_TOKEN_TTL),
   });
 }
+
+// Крок 1: Перенаправлення на сторінку Google OAuth
+export const getGoogleAuthUrl = (req, res) => {
+  const url = generateAuthUrl();
+  res.json({ url });
+};
+
+// Крок 2: Обробка callback від Google OAuth
+export const googleAuthCallback = async (req, res, next) => {
+  try {
+    const { code } = req.query;
+    const googleUser = await getGoogleAccountFromCode(code);
+
+    // Крок 3: Перевірка, чи існує користувач у базі даних, якщо ні, створити користувача
+    let user = await UsersCollection.findOne({ email: googleUser.email });
+    if (!user) {
+      user = await UsersCollection.create({
+        email: googleUser.email,
+        name: googleUser.name,
+        googleId: googleUser.sub,
+      });
+    }
+
+    // Крок 4: Генерація JWT токена для користувача
+    const token = jwt.sign({ id: user._id }, env('JWT_SECRET'), { expiresIn: '1h' });
+    res.json({ token });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export async function registerUserController(req, res) {
   const user = await registerUser(req.body);
@@ -68,26 +100,3 @@ export async function logoutUserController(req, res) {
   res.status(204).send();
 }
 
-export const getGoogleOAuthUrlController = async (req, res) => {
-  const url = generateAuthUrl();
-  res.json({
-    status: 200,
-    message: 'Successfully get Google OAuth url!',
-    data: {
-      url,
-    },
-  });
-};
-
-export const loginWithGoogleController = async (req, res) => {
-  const session = await loginOrSignupWithGoogle(req.body.code);
-  setupSession(res, session);
-
-  res.json({
-    status: 200,
-    message: 'Successfully logged in via Google OAuth!',
-    data: {
-      accessToken: session.accessToken,
-    },
-  });
-};

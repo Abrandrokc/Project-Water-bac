@@ -14,26 +14,24 @@ import {
   loginUserController,
   logoutUserController,
   refreshUserSessionController,
-  loginWithGoogleController,
-  getGoogleOAuthUrlController,
+  getGoogleAuthUrl,
+  googleAuthCallback 
 } from "../controllers/auth.js";
 
 const router = Router();
 const jsonParser = express.json();
+
+// Маршрут для генерації URL Google OAuth
+router.get('/get-oauth-url', getGoogleAuthUrl);
+
+// Маршрут для обробки callback від Google OAuth
+router.get('/google/callback', googleAuthCallback);
 
 router.post(
   "/register",
   jsonParser,
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController)
-);
-
-router.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
-
-router.post(
-  '/confirm-oauth',
-  validateBody(loginWithGoogleOAuthSchema),
-  ctrlWrapper(loginWithGoogleController),
 );
 
 router.post(
