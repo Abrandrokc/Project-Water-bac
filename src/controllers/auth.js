@@ -21,9 +21,13 @@ function setupSession(res, session) {
 }
 
 // Крок 1: Перенаправлення на сторінку Google OAuth
-export const getGoogleAuthUrl = (req, res) => {
-  const url = generateAuthUrl();
-  res.json({ url });
+export const getGoogleAuthUrl = (req, res, next) => {
+  try {
+    const url = generateAuthUrl();
+    res.json({ url });
+  } catch (error) {
+    next(createHttpError(500, 'Failed to generate Google OAuth URL'));
+  }
 };
 
 // Крок 2: Обробка callback від Google OAuth
@@ -39,6 +43,7 @@ export const googleAuthCallback = async (req, res, next) => {
         email: googleUser.email,
         name: googleUser.name,
         googleId: googleUser.sub,
+        photo: googleUser.picture,
       });
     }
 

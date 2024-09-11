@@ -16,3 +16,7 @@ export const getGoogleAccountFromCode = async (code) => {
   const ticket = await googleOAuthClient.verifyIdToken({ idToken: tokens.id_token });
   return ticket.getPayload();
 };
+
+export { googleOAuthClient };
+  
+

@@ -3,11 +3,11 @@ import { Router } from "express";
 
 import ctrlWrapper from "../utils/ctrlWrapper.js";
 import validateBody from "../middleware/validateBody.js";
+import { generateAuthUrl } from "../utils/googleOAuth2.js"
 
 import {
   registerUserSchema,
   loginUserSchema,
-  loginWithGoogleOAuthSchema,
 } from "../validation/auth.js";
 import {
   registerUserController,
@@ -23,7 +23,7 @@ const jsonParser = express.json();
 
 // Маршрут для генерації URL Google OAuth
 router.get('/get-oauth-url', getGoogleAuthUrl);
-
+router.get('/auth/get-oauth-url', generateAuthUrl);
 // Маршрут для обробки callback від Google OAuth
 router.get('/google/callback', googleAuthCallback);
 
