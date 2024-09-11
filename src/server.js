@@ -38,6 +38,11 @@ export default function setupServer() {
   app.use("/uploads", express.static(UPLOAD_DIR));
   app.use("/api-docs", swaggerUI.serve, swaggerDocs());
   app.use('/auth', authRoutes); 
+  app.get('/api/auth/google', (req, res) => {
+  // Генеруйте URL для Google авторизації
+  const googleAuthUrl = '';
+  res.json({ url: googleAuthUrl });
+});
   app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);

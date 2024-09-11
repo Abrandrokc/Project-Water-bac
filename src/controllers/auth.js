@@ -5,7 +5,7 @@ import {
   refreshUsersSession,
 } from "../services/auth.js";
 import { REFRESH_TOKEN_TTL } from "../constants/index.js";
-import { generateAuthUrl, getGoogleAccountFromCode } from '../utils/googleOAuth2.js';
+import { getGoogleAccountFromCode, googleOAuthClient  } from '../utils/googleOAuth2.js';
 import jwt from 'jsonwebtoken';
 
 
@@ -21,35 +21,76 @@ function setupSession(res, session) {
 }
 
 // Крок 1: Перенаправлення на сторінку Google OAuth
-export const getGoogleAuthUrl = (req, res, next) => {
+export const getGoogleAuthUrl = async (req, res, next) => {
   try {
-    const url = generateAuthUrl();
+    const url = googleOAuthClient.generateAuthUrl({
+      scope: ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'],
+    });
     res.json({ url });
   } catch (error) {
-    next(createHttpError(500, 'Failed to generate Google OAuth URL'));
+    next(error);
   }
 };
 
-// Крок 2: Обробка callback від Google OAuth
 export const googleAuthCallback = async (req, res, next) => {
   try {
     const { code } = req.query;
-    const googleUser = await getGoogleAccountFromCode(code);
+    if (!code) throw createHttpError(400, 'Code not provided');
 
-    // Крок 3: Перевірка, чи існує користувач у базі даних, якщо ні, створити користувача
-    let user = await UsersCollection.findOne({ email: googleUser.email });
+    const payload = await getGoogleAccountFromCode(code);
+    let user = await UsersCollection.findOne({ email: payload.email });
+
     if (!user) {
+      const password = await bcrypt.hash(randomBytes(10), 10);
       user = await UsersCollection.create({
-        email: googleUser.email,
-        name: googleUser.name,
-        googleId: googleUser.sub,
-        photo: googleUser.picture,
+        email: payload.email,
+        name: payload.name,
+        password,
       });
     }
 
-    // Крок 4: Генерація JWT токена для користувача
-    const token = jwt.sign({ id: user._id }, env('JWT_SECRET'), { expiresIn: '1h' });
-    res.json({ token });
+    await Session.deleteOne({ userId: user._id });
+    const newSession = createSession();
+    const session = await Session.create({
+      userId: user._id,
+      ...newSession,
+    });
+
+    res.json({ accessToken: session.accessToken, refreshToken: session.refreshToken });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const loginOrSignupWithGoogle = async (req, res, next) => {
+  const { code } = req.body;
+  try {
+    const loginTicket = await googleOAuthClient.getToken(code);
+    const payload = loginTicket.getPayload();
+    if (!payload) throw createHttpError(401);
+
+    let user = await UsersCollection.findOne({ email: payload.email });
+    if (!user) {
+      const password = await bcrypt.hash(randomBytes(10).toString('hex'), 10);
+      user = await UsersCollection.create({
+        email: payload.email,
+        name: payload.name,
+        password,
+      });
+    }
+
+    await Session.deleteOne({ userId: user._id });
+
+    const newSession = createSession();
+    const session = await Session.create({
+      userId: user._id,
+      ...newSession,
+    });
+
+    res.json({
+      accessToken: session.accessToken,
+      refreshToken: session.refreshToken,
+    });
   } catch (error) {
     next(error);
   }

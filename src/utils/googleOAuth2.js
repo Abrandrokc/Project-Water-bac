@@ -7,13 +7,22 @@ const googleOAuthClient = new OAuth2Client({
   redirectUri: env('GOOGLE_AUTH_REDIRECT_URI'),
 });
 
-export const generateAuthUrl = () => googleOAuthClient.generateAuthUrl({
-  scope: ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'],
-});
+export function generateAuthUrl() {
+  const scopes = ['profile', 'email'];
+  return oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: scopes,
+  });
+}
 
+// Функція для перевірки коду авторизації
 export const getGoogleAccountFromCode = async (code) => {
   const { tokens } = await googleOAuthClient.getToken(code);
-  const ticket = await googleOAuthClient.verifyIdToken({ idToken: tokens.id_token });
+  googleOAuthClient.setCredentials(tokens);
+  const ticket = await googleOAuthClient.verifyIdToken({
+    idToken: tokens.id_token,
+    audience: process.env.GOOGLE_CLIENT_ID
+  });
   return ticket.getPayload();
 };
 
