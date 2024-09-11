@@ -29,6 +29,7 @@ export async function registerUser(payload) {
   return await UsersCollection.create({
     ...payload,
     password: encryptedPassword,
+    oldPassword: encryptedPassword
   });
 }
 
