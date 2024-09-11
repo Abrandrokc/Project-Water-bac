@@ -71,8 +71,12 @@ export const patchUserController = async (req, res, next) => {
 export const patchWaterAmount = async (req, res, next) => {
   const userId = req.user._id;
   const user = req.body;
-   waterAmount= user.waterAmount
-
+  console.log("Water amount:", user);
+  let waterAmount = user.waterAmount
+  if ( waterAmount > 15){
+    waterAmount = user.waterAmount / 1000
+  }
+console.log("Water amount:", user.waterAmount);
   const result = await addWaterAmound({
 
     waterAmount,

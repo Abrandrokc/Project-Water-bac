@@ -38,16 +38,27 @@ export const updateUser = async (payload) => {
 };
 
 export const addWaterAmound = async (payload) => {
-
   const { userId, waterAmount } = payload;
-  const updateData = { waterAmount }; 
-  const updateUser = await UsersCollection.findOneAndUpdate(
-    { _id: userId },
-    { $set: updateData },
-    { new: true }
-  );
-  return {
-    user: updateUser,
-    isNew: Boolean(updateUser?.lastErrorObject?.upserted),
-  };
+
+  try {
+    const updateData = { waterAmount };
+    console.log(updateData)
+    const updateUser = await UsersCollection.findOneAndUpdate(
+      { _id: userId },
+      { $set: updateData },
+      { new: true }
+    );
+    
+    if (!updateUser) {
+      throw new Error("User not found");
+    }
+
+    return {
+      user: updateUser,
+      isNew: Boolean(updateUser?.lastErrorObject?.upserted),
+    };
+  } catch (error) {
+    console.error("Error updating water amount:", error);
+    throw new Error("Database update failed");
+  }
 };
