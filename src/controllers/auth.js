@@ -7,7 +7,8 @@ import {
 import { REFRESH_TOKEN_TTL } from "../constants/index.js";
 import { getGoogleAccountFromCode, googleOAuthClient  } from '../utils/googleOAuth2.js';
 import jwt from 'jsonwebtoken';
-
+import { UsersCollection } from "../db/models/users.js";
+import env from "../utils/env.js";
 
 function setupSession(res, session) {
   res.cookie("refreshToken", session.refreshToken, {
