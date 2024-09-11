@@ -57,8 +57,8 @@ paths:
       $ref: ../swagger/paths/water/perMonth/get.yaml
 components:
   schemas:
-    user:
-      $ref: ../swagger/components/schemas/user.yaml
+    users:
+      $ref: ../swagger/components/schemas/users.yaml
     water:
       $ref: ../swagger/components/schemas/water.yaml
   responses:

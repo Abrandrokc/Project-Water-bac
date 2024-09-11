@@ -16,6 +16,10 @@ properties:
     minLength: 8
     maxLength: 64
     example: "password123"
+  name:
+    description: "User's name"
+    type: string
+    example: "John Doe"
   photo:
     description: "Link to user's photo"
     type: string
