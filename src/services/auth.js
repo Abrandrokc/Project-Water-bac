@@ -5,6 +5,13 @@ import randomBytes from "randombytes";
 import { UsersCollection } from "../db/models/users.js";
 import { Session } from "../db/models/session.js";
 import { ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL } from "../constants/index.js";
+import { googleOAuthClient } from '../utils/googleOAuth2.js';
+
+export const generateAuthUrl = () => {
+  return googleOAuthClient.generateAuthUrl({
+    scope: ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'],
+  });
+};
 
 function createSession() {
   const accessToken = randomBytes(30).toString("base64");

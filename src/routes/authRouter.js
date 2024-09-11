@@ -17,6 +17,7 @@ import {
   getGoogleAuthUrl,
   googleAuthCallback 
 } from "../controllers/auth.js";
+import { generateAuthUrl } from "../services/auth.js"
 
 const router = Router();
 const jsonParser = express.json();
@@ -24,6 +25,7 @@ const jsonParser = express.json();
 // Маршрут для генерації URL Google OAuth
 router.get('/get-oauth-url', getGoogleAuthUrl);
 router.get('/auth/get-oauth-url', generateAuthUrl);
+router.post('/auth/login', loginUserController);
 // Маршрут для обробки callback від Google OAuth
 router.get('/google/callback', googleAuthCallback);
 
