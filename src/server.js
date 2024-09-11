@@ -3,6 +3,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 
 import waterRouters from "./routes/waterRoute.js";
+import authRoutes from "./routes/authRouter.js"
 
 import { UPLOAD_DIR } from "./constants/index.js";
 
@@ -36,6 +37,12 @@ export default function setupServer() {
   );
   app.use("/uploads", express.static(UPLOAD_DIR));
   app.use("/api-docs", swaggerUI.serve, swaggerDocs());
+  app.use('/auth', authRoutes); 
+  app.get('/api/auth/google', (req, res) => {
+  // Генеруйте URL для Google авторизації
+  const googleAuthUrl = '';
+  res.json({ url: googleAuthUrl });
+});
   app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);
