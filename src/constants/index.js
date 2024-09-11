@@ -16,4 +16,4 @@ export const CLOUDINARY = {
 };
 
 export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
-export const en = ["man","woman"]
+export const en = ["men","woman"]
