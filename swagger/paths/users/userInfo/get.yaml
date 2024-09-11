@@ -25,7 +25,7 @@ responses:
               example: "Successfully found User!"
             data:
               type: object
-              $ref: "../../../components/schemas/user.yaml"
+              $ref: "../../../components/schemas/users.yaml"
   "404":
     $ref: "../../../components/responses/404.yaml"
   "401":
