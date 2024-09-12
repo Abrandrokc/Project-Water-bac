@@ -36,8 +36,8 @@ const jsonParser = express.json();
 //   res.json({ url: authUrl });
 // });
 
-const client_id = env['GOOGLE_AUTH_CLIENT_ID'];
-const redirect_uri = env['GOOGLE_AUTH_REDIRECT_URI'];
+const client_id = env("GOOGLE_AUTH_CLIENT_ID");
+const redirect_uri = env("GOOGLE_AUTH_REDIRECT_URI");
 const scope = 'email profile';
 const response_type = 'code';
 const access_type = 'offline';
