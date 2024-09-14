@@ -4,6 +4,7 @@ import createHttpError from "http-errors";
 import { addWaterAmound, setAvatar, updateUser } from "../services/users.js";
 
 import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
+import { UsersCollection } from "../db/models/users.js";
 
 
 export const patchUserAvatarController = async (req, res, next) => {
@@ -49,25 +50,65 @@ export async function getValidUser(req, res, next) {
   });
 }
 
+import createHttpError from "http-errors";
+import bcrypt from "bcrypt";
+import { updateUser } from "../services/users.js";
+import { UsersCollection } from "../db/models/users.js";
+
 export const patchUserController = async (req, res, next) => {
   const userId = req.user._id;
   const user = req.body;
-  const result = await updateUser({
-    userId,
-    user,
-  });
 
-  if (!result) {
-    next(createHttpError(404, "User not found"));
-    return;
+  try {
+    
+    if (user.password && user.oldPassword) {
+      
+      const currentUser = await UsersCollection.findById(userId);
+
+      if (!currentUser) {
+        return next(createHttpError(404, "User not found"));
+      }
+
+     
+      const isOldPasswordValid = await bcrypt.compare(user.oldPassword, currentUser.password);
+
+      if (!isOldPasswordValid) {
+        return next(createHttpError(400, "Old password is incorrect"));
+      }
+
+     
+      const result = await updateUser({
+        userId,
+        user,
+      });
+
+      return res.json({
+        status: 200,
+        message: "Successfully updated user!",
+        data: result.user,
+      });
+    }
+
+   
+    const result = await updateUser({
+      userId,
+      user,
+    });
+
+    if (!result) {
+      return next(createHttpError(404, "User not found"));
+    }
+
+    res.json({
+      status: 200,
+      message: "Successfully updated user!",
+      data: result.user,
+    });
+  } catch (error) {
+    next(createHttpError(500, error.message));
   }
-
-  res.json({
-    status: 200,
-    message: `Successfully updated user!`,
-    data: result.user,
-  });
 };
+
 export const patchWaterAmount = async (req, res, next) => {
   const userId = req.user._id;
   const user = req.body;

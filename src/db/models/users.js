@@ -17,7 +17,7 @@ const usersSchema = new Schema(
     },
     waterAmount: {
       type: Number,
-      default: 15
+      default: 2
     }
   },
   { timestamps: true, versionKey: false }
