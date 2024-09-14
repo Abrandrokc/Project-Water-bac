@@ -10,8 +10,6 @@ const router = Router();
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-
-
 router.use("/water", waterRouters);
 
 export default router;
