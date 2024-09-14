@@ -59,36 +59,42 @@ export const patchUserController = async (req, res, next) => {
   const user = req.body;
 
   try {
-    
     if (user.password && user.oldPassword) {
-      
       const currentUser = await UsersCollection.findById(userId);
 
       if (!currentUser) {
         return next(createHttpError(404, "User not found"));
       }
 
-     
+      // Перевірка старого пароля
       const isOldPasswordValid = await bcrypt.compare(user.oldPassword, currentUser.password);
 
       if (!isOldPasswordValid) {
         return next(createHttpError(400, "Old password is incorrect"));
       }
 
-     
-      const result = await updateUser({
+      // Хешування нового пароля
+      const encryptedPassword = await bcrypt.hash(user.password, 10);
+
+      // Оновлення користувача
+      const result = await UsersCollection.findByIdAndUpdate(
         userId,
-        user,
-      });
+        { $set: { password: encryptedPassword } },
+        { new: true }
+      );
+
+      if (!result) {
+        return next(createHttpError(404, "User not found"));
+      }
 
       return res.json({
         status: 200,
-        message: "Successfully updated user!",
-        data: result.user,
+        message: "Successfully updated password!",
+        data: result,
       });
     }
 
-   
+    // Якщо пароль не передано, оновлення без зміни пароля
     const result = await updateUser({
       userId,
       user,
