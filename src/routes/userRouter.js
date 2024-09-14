@@ -7,7 +7,7 @@ import validateBody from "../middleware/validateBody.js";
 import { authenticate } from "../middleware/authenticate.js";
 import { upload } from "../middleware/multer.js";
 
-import { userSchema } from "../validation/user.js";
+import { userSchema, userSchemaPatch } from "../validation/user.js";
 import {
   patchUserAvatarController,
   patchUserController,
@@ -38,7 +38,7 @@ router.patch(
 router.patch(
   "/waterAmount",
   jsonParser,
-  validateBody(userSchema),
+  validateBody(userSchemaPatch),
   ctrlWrapper(patchWaterAmount)
 );
 export default router;
