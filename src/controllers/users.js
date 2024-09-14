@@ -2,7 +2,7 @@ import createHttpError from "http-errors";
 
 
 import { addWaterAmound, setAvatar, updateUser } from "../services/users.js";
-
+import bcrypt from "bcrypt";
 import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
 import { UsersCollection } from "../db/models/users.js";
 
@@ -50,10 +50,9 @@ export async function getValidUser(req, res, next) {
   });
 }
 
-import createHttpError from "http-errors";
-import bcrypt from "bcrypt";
-import { updateUser } from "../services/users.js";
-import { UsersCollection } from "../db/models/users.js";
+
+
+
 
 export const patchUserController = async (req, res, next) => {
   const userId = req.user._id;
