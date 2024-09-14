@@ -32,13 +32,13 @@ router.get("/userInfo", ctrlWrapper(getValidUser));
 router.patch(
   "/",
   jsonParser,
-  validateBody(userSchema),
+  validateBody(userSchemaPatch),
   ctrlWrapper(patchUserController)
 );
 router.patch(
   "/waterAmount",
   jsonParser,
-  validateBody(userSchemaPatch),
+  validateBody(userSchema),
   ctrlWrapper(patchWaterAmount)
 );
 export default router;
