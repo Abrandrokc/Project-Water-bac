@@ -5,10 +5,7 @@ import randomBytes from "randombytes";
 import { UsersCollection } from "../db/models/users.js";
 import { Session } from "../db/models/session.js";
 import { ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL } from "../constants/index.js";
-import {
-  getFullNameFromGoogleTokenPayload,
-  validateCode,
-} from '../utils/googleOAuth2.js';
+import { googleOAuthClient } from '../utils/googleOAuth2.js';
 
 function createSession() {
   const accessToken = randomBytes(30).toString("base64");
